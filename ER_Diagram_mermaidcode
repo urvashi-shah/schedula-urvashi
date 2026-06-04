@@ -1,0 +1,165 @@
+erDiagram
+  USER {
+    uuid user_id PK
+    string mobile_number
+    string name
+    string email
+    timestamp created_at
+    timestamp updated_at
+  }
+
+  FAMILY_MEMBER {
+    uuid member_id PK
+    uuid user_id FK
+    string name
+    string relationship
+    enum sex
+    int age
+    float weight_kg
+  }
+
+  DOCTOR {
+    uuid doctor_id PK
+    string name
+    string specialization
+    int experience_years
+    string credentials
+    string clinic_name
+    string clinic_address
+    float rating_consulting
+    float rating_clinic
+    float rating_waiting
+    string google_business_url
+  }
+
+  DOCTOR_AVAILABILITY {
+    uuid availability_id PK
+    uuid doctor_id FK
+    enum day_of_week
+    time slot_start
+    time slot_end
+    enum consulting_type
+    bool is_active
+  }
+
+  APPOINTMENT {
+    uuid appointment_id PK
+    uuid user_id FK
+    uuid member_id FK
+    uuid doctor_id FK
+    uuid slot_id FK
+    date appointment_date
+    time consulting_time
+    int token_number
+    enum consulting_type
+    enum visit_type
+    enum status
+    string complaint
+    float fee_amount
+    bool fee_paid
+    timestamp booked_at
+    timestamp cancelled_at
+    string cancel_reason
+  }
+
+  PATIENT_CHAT {
+    uuid chat_id PK
+    uuid appointment_id FK
+    uuid sender_user_id FK
+    string message
+    enum sender_role
+    timestamp sent_at
+  }
+
+  PAYMENT {
+    uuid payment_id PK
+    uuid appointment_id FK
+    uuid user_id FK
+    float amount
+    enum status
+    string payment_method
+    timestamp paid_at
+    timestamp refunded_at
+  }
+
+  FEEDBACK {
+    uuid feedback_id PK
+    uuid appointment_id FK
+    uuid user_id FK
+    int rating_consulting
+    int rating_clinic
+    int rating_waiting
+    text comments
+    timestamp submitted_at
+  }
+
+  REENGAGEMENT {
+    uuid reengagement_id PK
+    uuid appointment_id FK
+    uuid user_id FK
+    enum response
+    text patient_note
+    timestamp responded_at
+  }
+
+  NOTIFICATION {
+    uuid notification_id PK
+    uuid user_id FK
+    uuid appointment_id FK
+    enum type
+    string message
+    bool is_read
+    timestamp created_at
+  }
+
+  SUPPORT_TICKET {
+    uuid ticket_id PK
+    uuid user_id FK
+    string subject
+    text description
+    enum status
+    timestamp created_at
+    timestamp resolved_at
+  }
+
+  IVR_APPOINTMENT {
+    uuid ivr_id PK
+    uuid appointment_id FK
+    string ivr_app_id
+    bool is_confirmed
+    timestamp created_at
+  }
+
+  COPATIENT_GROUP {
+    uuid group_id PK
+    uuid doctor_id FK
+    string group_name
+    string condition_tag
+    timestamp created_at
+  }
+
+  COPATIENT_MEMBER {
+    uuid cp_member_id PK
+    uuid group_id FK
+    uuid user_id FK
+    timestamp joined_at
+  }
+
+  USER ||--o{ FAMILY_MEMBER : "has"
+  USER ||--o{ APPOINTMENT : "books"
+  FAMILY_MEMBER ||--o{ APPOINTMENT : "is patient in"
+  DOCTOR ||--o{ APPOINTMENT : "receives"
+  DOCTOR ||--o{ DOCTOR_AVAILABILITY : "has"
+  DOCTOR_AVAILABILITY ||--o{ APPOINTMENT : "used for"
+  APPOINTMENT ||--o{ PATIENT_CHAT : "has"
+  APPOINTMENT ||--o| PAYMENT : "billed via"
+  APPOINTMENT ||--o| FEEDBACK : "reviewed in"
+  APPOINTMENT ||--o| REENGAGEMENT : "triggers"
+  APPOINTMENT ||--o{ NOTIFICATION : "generates"
+  APPOINTMENT ||--o| IVR_APPOINTMENT : "linked to"
+  USER ||--o{ NOTIFICATION : "receives"
+  USER ||--o{ SUPPORT_TICKET : "raises"
+  USER ||--o{ PAYMENT : "makes"
+  DOCTOR ||--o{ COPATIENT_GROUP : "associated with"
+  COPATIENT_GROUP ||--o{ COPATIENT_MEMBER : "includes"
+  USER ||--o{ COPATIENT_MEMBER : "joins as"

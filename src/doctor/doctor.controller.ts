@@ -1,16 +1,42 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { JwtGuard } from '../auth/jwt/jwt.guard';
-import { RolesGuard } from '../auth/roles/roles.guard';
-import { Roles } from '../auth/roles/roles.decorator';
-
-@Controller('doctor')
-export class DoctorController {
-  @Roles('DOCTOR')
-  @UseGuards(JwtGuard, RolesGuard)
-  @Get('profile')
-  getProfile() {
-    return {
-      message: 'Doctor Profile Accessed Successfully',
-    };
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Req,
+    UseGuards,
+  } from '@nestjs/common';
+  import { JwtGuard } from '../auth/jwt/jwt.guard';
+  import { RolesGuard } from '../auth/roles/roles.guard';
+  import { Roles } from '../auth/roles/roles.decorator';
+  import { DoctorService } from './doctor.service';
+  import { CreateDoctorProfileDto } from './dto/create-doctor-profile.dto';
+  
+  @Controller('doctor')
+  export class DoctorController {
+    constructor(
+      private readonly doctorService: DoctorService,
+    ) {}
+  
+    @Roles('DOCTOR')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Post('profile')
+    createProfile(
+      @Body() createDoctorProfileDto: CreateDoctorProfileDto,
+      @Req() req,
+    ) {
+      return this.doctorService.createProfile(
+        createDoctorProfileDto,
+        req.user,
+      );
+    }
+  
+    @Roles('DOCTOR')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Get('profile')
+    getProfile() {
+      return {
+        message: 'Doctor Profile Accessed Successfully',
+      };
+    }
   }
-}

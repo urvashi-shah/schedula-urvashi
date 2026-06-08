@@ -22,7 +22,7 @@ import { CorrelationIdMiddleware } from './common/middleware/correlation-id.midd
       database: 'schedula_urvashi_db',
     
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
     }),
 
     AuthModule,

@@ -1,11 +1,32 @@
-export class CreatePatientProfileDto {
+import {
+    IsString,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+  } from 'class-validator';
+  
+  export class CreatePatientProfileDto {
+    @IsString()
+    @IsNotEmpty()
     fullName: string;
   
-    age: number;
+    @IsNumber(
+        {},
+        {
+          message: 'Age should be a number',
+        },
+      )
+      age: number;
   
+    @IsString()
+    @IsNotEmpty()
     gender: string;
   
+    @IsString()
+    @IsNotEmpty()
     contactDetails: string;
   
+    @IsOptional()
+    @IsString()
     healthInformation?: string;
   }

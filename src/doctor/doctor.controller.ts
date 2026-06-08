@@ -34,9 +34,9 @@ import {
     @Roles('DOCTOR')
     @UseGuards(JwtGuard, RolesGuard)
     @Get('profile')
-    getProfile() {
-      return {
-        message: 'Doctor Profile Accessed Successfully',
-      };
-    }
+    getProfile(@Req() req) {
+        return this.doctorService.getProfile(
+          req.user,
+        );
+      }
   }

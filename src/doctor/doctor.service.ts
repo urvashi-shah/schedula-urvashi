@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+    ConflictException,
+    Injectable,
+    NotFoundException,
+  } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DoctorProfile } from './entities/doctor-profile.entity';
@@ -34,6 +38,7 @@ export class DoctorService {
             'Doctor profile already exists',
           );
         }
+        
       
         const loggedInUser =
         await this.userRepository.findOne({
@@ -71,5 +76,28 @@ export class DoctorService {
           },
         };
       }
+
+      async getProfile(user: any) {
+        const doctorProfile =
+          await this.doctorProfileRepository.findOne({
+            where: {
+              user: {
+                id: user.userId,
+              },
+            },
+          });
+      
+        if (!doctorProfile) {
+          throw new NotFoundException(
+            'Doctor profile not found',
+          );
+        }
+      
+        return {
+          profile: doctorProfile,
+        };
+      }
+
+
 
 }

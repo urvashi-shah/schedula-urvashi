@@ -52,9 +52,24 @@ export class DoctorService {
             user: loggedInUser,
           });
       
-        return await this.doctorProfileRepository.save(
-          doctorProfile,
-        );
+          const savedProfile =
+          await this.doctorProfileRepository.save(
+            doctorProfile,
+          );
+        
+        return {
+          message: 'Doctor profile created successfully',
+          profile: {
+            id: savedProfile.id,
+            fullName: savedProfile.fullName,
+            specialization: savedProfile.specialization,
+            experience: savedProfile.experience,
+            qualification: savedProfile.qualification,
+            consultationFee: savedProfile.consultationFee,
+            availability: savedProfile.availability,
+            profileDetails: savedProfile.profileDetails,
+          },
+        };
       }
 
 }

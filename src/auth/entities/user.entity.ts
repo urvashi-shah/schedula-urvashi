@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
+import { DoctorProfile } from '../../doctor/entities/doctor-profile.entity';
+import { PatientProfile } from '../../patient/entities/patient-profile.entity';
 
 @Entity()
 export class User {
@@ -16,4 +18,10 @@ export class User {
 
   @Column()
   role: string;
+
+  @OneToOne(() => DoctorProfile, (doctorProfile) => doctorProfile.user)
+  doctorProfile: DoctorProfile;
+
+  @OneToOne(() => PatientProfile, (patientProfile) => patientProfile.user)
+  patientProfile: PatientProfile;
 }

@@ -7,6 +7,13 @@ import {
     Req,
     UseGuards,
   } from '@nestjs/common';
+  
+  import {
+    ApiBearerAuth,
+    ApiOperation,
+    ApiTags,
+  } from '@nestjs/swagger';
+  
   import { JwtGuard } from '../auth/jwt/jwt.guard';
   import { RolesGuard } from '../auth/roles/roles.guard';
   import { Roles } from '../auth/roles/roles.decorator';
@@ -14,12 +21,17 @@ import {
   import { CreatePatientProfileDto } from './dto/create-patient-profile.dto';
   import { UpdatePatientProfileDto } from './dto/update-patient-profile.dto';
   
+  @ApiTags('Patient Profile')
+  @ApiBearerAuth()
   @Controller('patient')
   export class PatientController {
     constructor(
       private readonly patientService: PatientService,
     ) {}
   
+    @ApiOperation({
+      summary: 'Create patient profile',
+    })
     @Roles('PATIENT')
     @UseGuards(JwtGuard, RolesGuard)
     @Post('profile')
@@ -33,6 +45,9 @@ import {
       );
     }
   
+    @ApiOperation({
+      summary: 'Get patient profile',
+    })
     @Roles('PATIENT')
     @UseGuards(JwtGuard, RolesGuard)
     @Get('profile')
@@ -42,6 +57,9 @@ import {
       );
     }
   
+    @ApiOperation({
+      summary: 'Update patient profile',
+    })
     @Roles('PATIENT')
     @UseGuards(JwtGuard, RolesGuard)
     @Patch('profile')

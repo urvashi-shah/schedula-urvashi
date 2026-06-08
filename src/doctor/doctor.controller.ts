@@ -2,24 +2,36 @@ import {
     Controller,
     Get,
     Post,
+    Patch,
     Body,
     Req,
     UseGuards,
   } from '@nestjs/common';
+  
+  import {
+    ApiBearerAuth,
+    ApiOperation,
+    ApiTags,
+  } from '@nestjs/swagger';
+  
   import { JwtGuard } from '../auth/jwt/jwt.guard';
   import { RolesGuard } from '../auth/roles/roles.guard';
   import { Roles } from '../auth/roles/roles.decorator';
   import { DoctorService } from './doctor.service';
   import { CreateDoctorProfileDto } from './dto/create-doctor-profile.dto';
-  import { Patch } from '@nestjs/common';
   import { UpdateDoctorProfileDto } from './dto/update-doctor-profile.dto';
   
+  @ApiTags('Doctor Profile')
+  @ApiBearerAuth()
   @Controller('doctor')
   export class DoctorController {
     constructor(
       private readonly doctorService: DoctorService,
     ) {}
   
+    @ApiOperation({
+      summary: 'Create doctor profile',
+    })
     @Roles('DOCTOR')
     @UseGuards(JwtGuard, RolesGuard)
     @Post('profile')
@@ -33,25 +45,31 @@ import {
       );
     }
   
+    @ApiOperation({
+      summary: 'Get doctor profile',
+    })
     @Roles('DOCTOR')
     @UseGuards(JwtGuard, RolesGuard)
     @Get('profile')
     getProfile(@Req() req) {
-        return this.doctorService.getProfile(
-          req.user,
-        );
-      }
-
-   @Roles('DOCTOR')
-   @UseGuards(JwtGuard, RolesGuard)
-   @Patch('profile')
-   updateProfile(
-   @Body() updateDoctorProfileDto: UpdateDoctorProfileDto,
-   @Req() req,
-) {
-  return this.doctorService.updateProfile(
-    updateDoctorProfileDto,
-    req.user,
-  );
-}
+      return this.doctorService.getProfile(
+        req.user,
+      );
+    }
+  
+    @ApiOperation({
+      summary: 'Update doctor profile',
+    })
+    @Roles('DOCTOR')
+    @UseGuards(JwtGuard, RolesGuard)
+    @Patch('profile')
+    updateProfile(
+      @Body() updateDoctorProfileDto: UpdateDoctorProfileDto,
+      @Req() req,
+    ) {
+      return this.doctorService.updateProfile(
+        updateDoctorProfileDto,
+        req.user,
+      );
+    }
   }

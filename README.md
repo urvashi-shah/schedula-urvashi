@@ -96,3 +96,24 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+Day 1 Internship Submission
+(Previous Day 1 work)
+
+## Day 2 Internship Submission
+
+### Features Implemented
+
+* User Registration (Doctor and Patient)
+* User Login with JWT Authentication
+* Password Hashing using bcrypt
+* PostgreSQL Integration using TypeORM
+* Protected Routes using JWT Guard
+* Role-Based Authorization
+
+### Additional Enhancements
+
+* DTOs for structured request handling
+* Duplicate email validation with HTTP 409 Conflict response
+* Logging for signup and login activities
+

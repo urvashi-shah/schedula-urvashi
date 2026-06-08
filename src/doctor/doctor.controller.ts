@@ -11,6 +11,8 @@ import {
   import { Roles } from '../auth/roles/roles.decorator';
   import { DoctorService } from './doctor.service';
   import { CreateDoctorProfileDto } from './dto/create-doctor-profile.dto';
+  import { Patch } from '@nestjs/common';
+  import { UpdateDoctorProfileDto } from './dto/update-doctor-profile.dto';
   
   @Controller('doctor')
   export class DoctorController {
@@ -39,4 +41,17 @@ import {
           req.user,
         );
       }
+
+   @Roles('DOCTOR')
+   @UseGuards(JwtGuard, RolesGuard)
+   @Patch('profile')
+   updateProfile(
+   @Body() updateDoctorProfileDto: UpdateDoctorProfileDto,
+   @Req() req,
+) {
+  return this.doctorService.updateProfile(
+    updateDoctorProfileDto,
+    req.user,
+  );
+}
   }

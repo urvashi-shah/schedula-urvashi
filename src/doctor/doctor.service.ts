@@ -7,8 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DoctorProfile } from './entities/doctor-profile.entity';
 import { CreateDoctorProfileDto } from './dto/create-doctor-profile.dto';
-
 import { User } from '../auth/entities/user.entity';
+import { UpdateDoctorProfileDto } from './dto/update-doctor-profile.dto';
 
 @Injectable()
 export class DoctorService {
@@ -95,6 +95,41 @@ export class DoctorService {
       
         return {
           profile: doctorProfile,
+        };
+      }
+
+      async updateProfile(
+        updateDoctorProfileDto: UpdateDoctorProfileDto,
+        user: any,
+      ) {
+        const doctorProfile =
+          await this.doctorProfileRepository.findOne({
+            where: {
+              user: {
+                id: user.userId,
+              },
+            },
+          });
+      
+        if (!doctorProfile) {
+          throw new NotFoundException(
+            'Doctor profile not found',
+          );
+        }
+      
+        Object.assign(
+          doctorProfile,
+          updateDoctorProfileDto,
+        );
+      
+        const updatedProfile =
+          await this.doctorProfileRepository.save(
+            doctorProfile,
+          );
+      
+        return {
+          message: 'Doctor profile updated successfully',
+          profile: updatedProfile,
         };
       }
 

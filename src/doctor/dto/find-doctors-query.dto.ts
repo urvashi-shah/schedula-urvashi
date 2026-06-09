@@ -9,6 +9,7 @@ import {
   Min,
 } from 'class-validator';
 import { Specialization } from '../enums/specialization.enum';
+import { getAllowedSpecializationValues } from '../enums/specialization.labels';
 
 export class FindDoctorsQueryDto {
   @ApiPropertyOptional({
@@ -26,8 +27,7 @@ export class FindDoctorsQueryDto {
   })
   @IsOptional()
   @IsEnum(Specialization, {
-    message:
-      'Invalid specialization. Allowed values: CARDIOLOGIST, DERMATOLOGIST, PEDIATRICIAN, NEUROLOGIST, ORTHOPEDIC, GENERAL_PHYSICIAN, GYNECOLOGIST, PSYCHIATRIST',
+    message: `Invalid specialization. Allowed values: ${getAllowedSpecializationValues()}`,
   })
   specialization?: Specialization;
 

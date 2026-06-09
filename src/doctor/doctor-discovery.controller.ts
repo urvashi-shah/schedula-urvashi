@@ -1,13 +1,16 @@
 import {
     BadRequestException,
+    Body,
     Controller,
     Get,
+    Post,
     Query,
     Param,
     ParseIntPipe,
 } from '@nestjs/common';
 
 import {
+    ApiBody,
     ApiOperation,
     ApiParam,
     ApiQuery,
@@ -16,8 +19,11 @@ import {
 } from '@nestjs/swagger';
 
 import { DoctorService } from './doctor.service';
+import { DoctorRecommendationService } from './services/doctor-recommendation.service';
 import { FindDoctorsQueryDto } from './dto/find-doctors-query.dto';
 import { PaginatedDoctorsResponseDto } from './dto/paginated-doctors-response.dto';
+import { RecommendDoctorDto } from './dto/recommend-doctor.dto';
+import { DoctorRecommendationResponseDto } from './dto/doctor-recommendation-response.dto';
 import { Specialization } from './enums/specialization.enum';
 
 @ApiTags('Doctor Discovery')
@@ -25,6 +31,7 @@ import { Specialization } from './enums/specialization.enum';
 export class DoctorDiscoveryController {
     constructor(
         private readonly doctorService: DoctorService,
+        private readonly doctorRecommendationService: DoctorRecommendationService,
     ) {}
 
     @ApiOperation({
@@ -75,6 +82,41 @@ export class DoctorDiscoveryController {
     @Get()
     findAll(@Query() query: FindDoctorsQueryDto) {
         return this.doctorService.findAll(query);
+    }
+
+    @ApiOperation({
+        summary:
+            'Get AI-powered doctor recommendations from symptoms',
+        description:
+            'Maps patient symptoms to relevant specialties using OpenAI, then returns the top 3 most experienced matching doctors. Public endpoint — no authentication required.',
+    })
+    @ApiBody({ type: RecommendDoctorDto })
+    @ApiResponse({
+        status: 200,
+        description:
+            'Doctor recommendations based on symptoms',
+        type: DoctorRecommendationResponseDto,
+    })
+    @ApiResponse({
+        status: 400,
+        description: 'Invalid symptoms input',
+    })
+    @ApiResponse({
+        status: 502,
+        description: 'Invalid OpenAI response',
+    })
+    @ApiResponse({
+        status: 503,
+        description:
+            'Recommendation service unavailable or OpenAI failure',
+    })
+    @Post('recommend')
+    recommend(
+        @Body() recommendDoctorDto: RecommendDoctorDto,
+    ) {
+        return this.doctorRecommendationService.recommend(
+            recommendDoctorDto.symptoms,
+        );
     }
 
     @ApiOperation({

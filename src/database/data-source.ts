@@ -1,17 +1,18 @@
 import 'reflect-metadata';
+import * as dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
 
 import { User } from '../auth/entities/user.entity';
 import { DoctorProfile } from '../doctor/entities/doctor-profile.entity';
 import { PatientProfile } from '../patient/entities/patient-profile.entity';
 
+dotenv.config();
+
+const databaseUrl = process.env.DATABASE_URL ?? `postgres://${process.env.DB_USERNAME ?? 'postgres'}:${process.env.DB_PASSWORD ?? 'postgres'}@${process.env.DB_HOST ?? 'localhost'}:${process.env.DB_PORT ?? '5432'}/${process.env.DB_DATABASE ?? 'schedula_urvashi_db'}`;
+
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'postgres',
-  database: 'schedula_urvashi_db',
+  url: databaseUrl,
 
   synchronize: false,
 

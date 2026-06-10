@@ -14,7 +14,7 @@ import { RolesGuard } from './roles/roles.guard';
     PassportModule,
 
     JwtModule.register({
-      secret: 'schedula-secret-key',
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
   ],

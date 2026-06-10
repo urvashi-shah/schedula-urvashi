@@ -13,13 +13,15 @@ async function bootstrap() {
   );
 
   app.useGlobalPipes(
-    new ValidationPipe(),
+    new ValidationPipe({
+      transform: true,
+    }),
   );
 
   const config = new DocumentBuilder()
     .setTitle('Schedula API')
     .setDescription(
-      'Doctor and Patient Onboarding APIs',
+      'Doctor and Patient Onboarding, Discovery, and AI Recommendation APIs',
     )
     .setVersion('1.0')
     .addBearerAuth()

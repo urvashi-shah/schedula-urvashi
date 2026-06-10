@@ -10,6 +10,8 @@ import { DoctorProfile } from './entities/doctor-profile.entity';
 import { CreateDoctorProfileDto } from './dto/create-doctor-profile.dto';
 import { User } from '../auth/entities/user.entity';
 import { UpdateDoctorProfileDto } from './dto/update-doctor-profile.dto';
+import { FindDoctorsQueryDto } from './dto/find-doctors-query.dto';
+import { getSpecializationLabel } from './enums/specialization.labels';
 
 @Injectable()
 export class DoctorService {
@@ -195,6 +197,136 @@ export class DoctorService {
         };
     }
 
+    async findAll(query: FindDoctorsQueryDto) {
+        const page = query.page ?? 1;
+        const limit = query.limit ?? 10;
 
+        this.logger.log('Fetching doctors');
+        this.logger.debug(
+            `Query params: page=${page}, limit=${limit}`,
+        );
 
+        const queryBuilder =
+            this.doctorProfileRepository.createQueryBuilder(
+                'doctor',
+            );
+
+        if (query.search) {
+            this.logger.debug('Applying search filter');
+            queryBuilder.andWhere(
+                'doctor.fullName ILIKE :search',
+                { search: `%${query.search}%` },
+            );
+        }
+
+        if (query.specialization) {
+            this.logger.debug(
+                'Applying specialization filter',
+            );
+            const specializationValue =
+                getSpecializationLabel(
+                    query.specialization,
+                ).toLowerCase();
+            queryBuilder.andWhere(
+                'LOWER(doctor.specialization) = :specialization',
+                { specialization: specializationValue },
+            );
+        }
+
+        if (query.availability === true) {
+            this.logger.debug(
+                'Applying availability filter',
+            );
+            queryBuilder.andWhere(
+                "doctor.availability IS NOT NULL AND TRIM(doctor.availability) <> ''",
+            );
+        } else if (query.availability === false) {
+            this.logger.debug(
+                'Applying unavailable filter',
+            );
+            queryBuilder.andWhere(
+                "(doctor.availability IS NULL OR TRIM(doctor.availability) = '')",
+            );
+        }
+
+        queryBuilder
+            .orderBy('doctor.id', 'ASC')
+            .skip((page - 1) * limit)
+            .take(limit);
+
+        const [doctors, total] =
+            await queryBuilder.getManyAndCount();
+
+        if (total === 0) {
+            this.logger.warn('No doctors found');
+        }
+
+        this.logger.log(
+            `Fetched ${doctors.length} doctors (total: ${total})`,
+        );
+
+        return {
+            data: doctors.map((doctor) =>
+                this.toListItem(doctor),
+            ),
+            page,
+            limit,
+            total,
+            totalPages:
+                total > 0
+                    ? Math.ceil(total / limit)
+                    : 0,
+        };
+    }
+
+    async findById(id: number) {
+        this.logger.log(
+            `Fetching doctor details for id ${id}`,
+        );
+        this.logger.debug(
+            'Searching doctor profile in database',
+        );
+
+        const doctor =
+            await this.doctorProfileRepository.findOne({
+                where: { id },
+            });
+
+        if (!doctor) {
+            this.logger.warn(
+                `Doctor not found: id ${id}`,
+            );
+            throw new NotFoundException(
+                'Doctor not found',
+            );
+        }
+
+        this.logger.log(
+            `Doctor details fetched for id ${id}`,
+        );
+
+        return {
+            profile: {
+                id: doctor.id,
+                fullName: doctor.fullName,
+                specialization: doctor.specialization,
+                experience: doctor.experience,
+                qualification: doctor.qualification,
+                consultationFee: doctor.consultationFee,
+                availability: doctor.availability,
+                profileDetails: doctor.profileDetails,
+            },
+        };
+    }
+
+    private toListItem(doctor: DoctorProfile) {
+        return {
+            id: doctor.id,
+            fullName: doctor.fullName,
+            specialization: doctor.specialization,
+            experience: doctor.experience,
+            consultationFee: doctor.consultationFee,
+            availability: doctor.availability,
+        };
+    }
 }

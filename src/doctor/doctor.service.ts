@@ -11,6 +11,7 @@ import { CreateDoctorProfileDto } from './dto/create-doctor-profile.dto';
 import { User } from '../auth/entities/user.entity';
 import { UpdateDoctorProfileDto } from './dto/update-doctor-profile.dto';
 import { FindDoctorsQueryDto } from './dto/find-doctors-query.dto';
+import { getSpecializationLabel } from './enums/specialization.labels';
 
 @Injectable()
 export class DoctorService {
@@ -222,9 +223,10 @@ export class DoctorService {
             this.logger.debug(
                 'Applying specialization filter',
             );
-            const specializationValue = query.specialization
-                .replace(/_/g, ' ')
-                .toLowerCase();
+            const specializationValue =
+                getSpecializationLabel(
+                    query.specialization,
+                ).toLowerCase();
             queryBuilder.andWhere(
                 'LOWER(doctor.specialization) = :specialization',
                 { specialization: specializationValue },

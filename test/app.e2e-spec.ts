@@ -20,7 +20,9 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/')
       .expect(200)
-      .expect('Hello World!');
+      .expect(
+        'Hey! Everyone, Urvashi Shah this side. Welcome to my Schedula Project!',
+      );
   });
 
   afterEach(async () => {

@@ -1,40 +1,55 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    OneToOne,
-    JoinColumn,
-  } from 'typeorm';
-  
-  import { User } from '../../auth/entities/user.entity';
-  
-  @Entity()
-  export class DoctorProfile {
-    @PrimaryGeneratedColumn()
-    id: number;
-  
-    @Column()
-    fullName: string;
-  
-    @Column()
-    specialization: string;
-  
-    @Column()
-    experience: number;
-  
-    @Column()
-    qualification: string;
-  
-    @Column('decimal')
-    consultationFee: number;
-  
-    @Column()
-    availability: string;
-  
-    @Column()
-    profileDetails: string;
-  
-    @OneToOne(() => User, (user) => user.doctorProfile)
-    @JoinColumn()
-    user: User;
-  }
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
+
+import { User } from '../../auth/entities/user.entity';
+import { RecurringAvailability } from './recurring-availability.entity';
+import { CustomAvailability } from './custom-availability.entity';
+
+@Entity()
+export class DoctorProfile {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  fullName: string;
+
+  @Column()
+  specialization: string;
+
+  @Column()
+  experience: number;
+
+  @Column()
+  qualification: string;
+
+  @Column('decimal')
+  consultationFee: number;
+
+  @Column()
+  availability: string;
+
+  @Column()
+  profileDetails: string;
+
+  @OneToOne(() => User, (user) => user.doctorProfile)
+  @JoinColumn()
+  user: User;
+
+  @OneToMany(
+    () => RecurringAvailability,
+    (availability) => availability.doctorProfile,
+  )
+  recurringAvailabilities: RecurringAvailability[];
+
+  @OneToMany(
+    () => CustomAvailability,
+    (availability) => availability.doctorProfile,
+  )
+  customAvailabilities: CustomAvailability[];
+}

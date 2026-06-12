@@ -28,11 +28,16 @@ export class DoctorProfile {
   @Column()
   qualification: string;
 
-  @Column('decimal')
-  consultationFee: number;
+ @Column('decimal')
+consultationFee: number;
 
-  @Column()
-  availability: string;
+@Column({
+  default: 15,
+})
+slotDuration: number;
+
+@Column()
+availability: string;
 
   @Column()
   profileDetails: string;

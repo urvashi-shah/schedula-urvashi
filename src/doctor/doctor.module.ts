@@ -11,6 +11,8 @@ import { User } from '../auth/entities/user.entity';
 import { DoctorRecommendationService } from './services/doctor-recommendation.service';
 import { OpenAiSpecialtyMatcherService } from './services/openai-specialty-matcher.service';
 import { AvailabilityService } from './services/availability.service';
+import { SlotService } from './services/slot.service';
+import { SlotController } from './slot.controller';
 
 @Module({
   imports: [
@@ -25,12 +27,14 @@ import { AvailabilityService } from './services/availability.service';
     DoctorProfileController,
     AvailabilityController,
     DoctorDiscoveryController,
+    SlotController,
   ],
   providers: [
     DoctorService,
     DoctorRecommendationService,
     OpenAiSpecialtyMatcherService,
     AvailabilityService,
+    SlotService,
   ],
 })
 export class DoctorModule {}

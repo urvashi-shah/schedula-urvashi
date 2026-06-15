@@ -13,6 +13,8 @@ import { OpenAiSpecialtyMatcherService } from './services/openai-specialty-match
 import { AvailabilityService } from './services/availability.service';
 import { SlotService } from './services/slot.service';
 import { SlotController } from './slot.controller';
+import { AppointmentModule } from '../appointment/appointment.module';
+import { Appointment } from '../appointment/entities/appointment.entity';
 
 @Module({
   imports: [
@@ -21,7 +23,9 @@ import { SlotController } from './slot.controller';
       RecurringAvailability,
       CustomAvailability,
       User,
+      Appointment,
     ]),
+     AppointmentModule,
   ],
   controllers: [
     DoctorProfileController,

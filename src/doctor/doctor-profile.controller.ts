@@ -20,6 +20,7 @@ import { Roles } from '../auth/roles/roles.decorator';
 import { DoctorService } from './doctor.service';
 import { CreateDoctorProfileDto } from './dto/create-doctor-profile.dto';
 import { UpdateDoctorProfileDto } from './dto/update-doctor-profile.dto';
+import { AppointmentService } from '../appointment/appointment.service';
 
 @ApiTags('Doctor Profile')
 @ApiBearerAuth()
@@ -27,6 +28,7 @@ import { UpdateDoctorProfileDto } from './dto/update-doctor-profile.dto';
 export class DoctorProfileController {
     constructor(
         private readonly doctorService: DoctorService,
+        private readonly appointmentService: AppointmentService,
     ) {}
 
     @ApiOperation({
@@ -72,4 +74,20 @@ export class DoctorProfileController {
             req.user,
         );
     }
+    @ApiOperation({
+    summary: 'Get doctor appointments',
+})
+@Roles('DOCTOR')
+@UseGuards(
+    JwtGuard,
+    RolesGuard,
+)
+@Get('appointments')
+getAppointments(
+    @Req() req,
+) {
+    return this.appointmentService.getDoctorAppointments(
+        req.user,
+    );
+}
 }

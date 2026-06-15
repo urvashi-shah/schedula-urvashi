@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { DoctorModule } from './doctor/doctor.module';
 import { PatientModule } from './patient/patient.module';
 import { CorrelationIdMiddleware } from './common/middleware/correlation-id.middleware';
+import { AppointmentModule } from './appointment/appointment.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ TypeOrmModule.forRoot({
     AuthModule,
     DoctorModule,
     PatientModule,
+    AppointmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

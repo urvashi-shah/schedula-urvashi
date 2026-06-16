@@ -12,9 +12,12 @@ import { Repository } from 'typeorm';
 import { Appointment } from './entities/appointment.entity';
 import { DoctorProfile } from '../doctor/entities/doctor-profile.entity';
 import { PatientProfile } from '../patient/entities/patient-profile.entity';
-import { User } from '../auth/entities/user.entity';
+//import { User } from '../auth/entities/user.entity';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { AppointmentStatus } from './enums/appointment-status.enum';
+import { CustomAvailability } from '../doctor/entities/custom-availability.entity';
+import { RecurringAvailability } from '../doctor/entities/recurring-availability.entity';
+import { SchedulingType } from '../doctor/enums/scheduling-type.enum';
 
 @Injectable()
 export class AppointmentService {
@@ -31,9 +34,16 @@ export class AppointmentService {
     private readonly patientProfileRepository:
       Repository<PatientProfile>,
 
-    @InjectRepository(User)
-    private readonly userRepository:
-      Repository<User>,
+    @InjectRepository(CustomAvailability)
+private readonly customAvailabilityRepository:
+  Repository<CustomAvailability>,
+
+@InjectRepository(RecurringAvailability)
+private readonly recurringAvailabilityRepository:
+  Repository<RecurringAvailability>,
+      // @InjectRepository(User)
+    // private readonly userRepository:
+    //   Repository<User>,
   ) {}
 
   async getPatientProfile(
@@ -56,7 +66,7 @@ export class AppointmentService {
 
     return patientProfile;
   }
-  async bookAppointment(
+async bookAppointment(
   createAppointmentDto: CreateAppointmentDto,
   user: { userId: number },
 ) {
@@ -70,6 +80,18 @@ export class AppointmentService {
       createAppointmentDto.doctorId,
     );
 
+  const availability =
+    await this.resolveAvailabilityForBooking(
+      doctorProfile.id,
+      createAppointmentDto.date,
+    );
+
+  if (!availability) {
+    throw new NotFoundException(
+      'Doctor is not available on this date',
+    );
+  }
+
   const appointmentDateTime =
     new Date(
       `${createAppointmentDto.date}T${createAppointmentDto.startTime}`,
@@ -82,6 +104,73 @@ export class AppointmentService {
     throw new BadRequestException(
       'Appointment must be booked for a future date and time',
     );
+  }
+
+  let tokenNumber: number | null = null;
+
+  if (
+    availability.schedulingType ===
+    SchedulingType.WAVE
+  ) {
+    if (
+      createAppointmentDto.startTime !==
+        availability.startTime ||
+      createAppointmentDto.endTime !==
+        availability.endTime
+    ) {
+      throw new BadRequestException(
+        'Invalid wave time window',
+      );
+    }
+
+    const existingPatientBooking =
+      await this.appointmentRepository.findOne({
+        where: {
+          doctorProfile: {
+            id: doctorProfile.id,
+          },
+          patientProfile: {
+            id: patientProfile.id,
+          },
+          date: createAppointmentDto.date,
+          status:
+            AppointmentStatus.BOOKED,
+        },
+      });
+
+    if (existingPatientBooking) {
+      throw new ConflictException(
+        'You have already booked this wave',
+      );
+    }
+
+    const bookedAppointments =
+      await this.appointmentRepository.find({
+        where: {
+          doctorProfile: {
+            id: doctorProfile.id,
+          },
+          date: createAppointmentDto.date,
+          startTime:
+            availability.startTime,
+          endTime:
+            availability.endTime,
+          status:
+            AppointmentStatus.BOOKED,
+        },
+      });
+
+    if (
+      bookedAppointments.length >=
+      (availability.capacity ?? 0)
+    ) {
+      throw new ConflictException(
+        'Wave is full',
+      );
+    }
+
+    tokenNumber =
+      bookedAppointments.length + 1;
   }
 
   const existingAppointment =
@@ -98,7 +187,11 @@ export class AppointmentService {
       },
     });
 
-  if (existingAppointment) {
+  if (
+    availability.schedulingType ===
+      SchedulingType.STREAM &&
+    existingAppointment
+  ) {
     throw new ConflictException(
       'Slot already booked',
     );
@@ -115,6 +208,8 @@ export class AppointmentService {
         createAppointmentDto.endTime,
       status:
         AppointmentStatus.BOOKED,
+      tokenNumber:
+        tokenNumber ?? undefined,
     });
 
   const savedAppointment =
@@ -122,42 +217,44 @@ export class AppointmentService {
       appointment,
     );
 
-return {
-  message:
-    'Appointment booked successfully',
-  appointment: {
-    id: savedAppointment.id,
+  return {
+    message:
+      'Appointment booked successfully',
+    appointment: {
+      id: savedAppointment.id,
 
-    doctorId:
-      doctorProfile.id,
+      doctorId:
+        doctorProfile.id,
 
-    doctorName:
-      doctorProfile.fullName,
+      doctorName:
+        doctorProfile.fullName,
 
-    specialization:
-      doctorProfile.specialization, 
+      specialization:
+        doctorProfile.specialization,
 
-    patientId:
-      patientProfile.id,
+      patientId:
+        patientProfile.id,
 
-    patientName:
-      patientProfile.fullName,
+      patientName:
+        patientProfile.fullName,
 
-    date:
-      savedAppointment.date,
+      date:
+        savedAppointment.date,
 
-    startTime:
-      savedAppointment.startTime,
+      startTime:
+        savedAppointment.startTime,
 
-    endTime:
-      savedAppointment.endTime,
+      endTime:
+        savedAppointment.endTime,
 
-    status:
-      savedAppointment.status,
-  },
-};
+      status:
+        savedAppointment.status,
+
+      tokenNumber:
+        savedAppointment.tokenNumber,
+    },
+  };
 }
-
   async getDoctorProfile(
     doctorId: number,
   ) {
@@ -176,6 +273,52 @@ return {
 
     return doctorProfile;
   }
+
+  private async resolveAvailabilityForBooking(
+  doctorId: number,
+  date: string,
+) {
+  const customAvailability =
+    await this.customAvailabilityRepository.findOne({
+      where: {
+        doctorProfile: {
+          id: doctorId,
+        },
+        date,
+      },
+      order: {
+        startTime: 'ASC',
+      },
+    });
+
+  if (customAvailability) {
+    return customAvailability;
+  }
+
+  const dayOfWeek = [
+    'SUNDAY',
+    'MONDAY',
+    'TUESDAY',
+    'WEDNESDAY',
+    'THURSDAY',
+    'FRIDAY',
+    'SATURDAY',
+  ][new Date(date).getDay()];
+
+  return this.recurringAvailabilityRepository.findOne({
+    where: {
+      doctorProfile: {
+        id: doctorId,
+      },
+      dayOfWeek: dayOfWeek as any,
+      isActive: true,
+    },
+    order: {
+      startTime: 'ASC',
+    },
+  });
+}
+
   async getMyAppointments(
   user: { userId: number },
 ) {

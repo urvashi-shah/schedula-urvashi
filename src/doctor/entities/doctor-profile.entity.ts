@@ -14,47 +14,47 @@ import { CustomAvailability } from './custom-availability.entity';
 @Entity()
 export class DoctorProfile {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  fullName: string;
+  fullName!: string;
 
   @Column()
-  specialization: string;
+  specialization!: string;
 
   @Column()
-  experience: number;
+  experience!: number;
 
   @Column()
-  qualification: string;
+  qualification!: string;
 
  @Column('decimal')
-consultationFee: number;
+consultationFee!: number;
 
 @Column({
   default: 15,
 })
-slotDuration: number;
+slotDuration!: number;
 
 @Column()
-availability: string;
+availability!: string;
 
   @Column()
-  profileDetails: string;
+  profileDetails!: string;
 
   @OneToOne(() => User, (user) => user.doctorProfile)
   @JoinColumn()
-  user: User;
+  user!: User;
 
   @OneToMany(
     () => RecurringAvailability,
     (availability) => availability.doctorProfile,
   )
-  recurringAvailabilities: RecurringAvailability[];
+  recurringAvailabilities!: RecurringAvailability[];
 
   @OneToMany(
     () => CustomAvailability,
     (availability) => availability.doctorProfile,
   )
-  customAvailabilities: CustomAvailability[];
+  customAvailabilities!: CustomAvailability[];
 }

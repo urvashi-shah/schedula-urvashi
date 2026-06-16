@@ -14,6 +14,7 @@ import { CreateRecurringAvailabilityDto } from '../dto/create-recurring-availabi
 import { UpdateRecurringAvailabilityDto } from '../dto/update-recurring-availability.dto';
 import { CreateCustomAvailabilityDto } from '../dto/create-custom-availability.dto';
 import { DayOfWeek } from '../enums/day-of-week.enum';
+import { SchedulingType } from '../enums/scheduling-type.enum';
 
 @Injectable()
 export class AvailabilityService {
@@ -35,6 +36,11 @@ export class AvailabilityService {
     const doctorProfile = await this.getDoctorProfileForUser(user.userId);
     const startTime = this.normalizeTime(dto.startTime);
     const endTime = this.normalizeTime(dto.endTime);
+    this.validateSchedulingConfiguration(
+  dto.schedulingType,
+  dto.bufferTime,
+  dto.capacity,
+);
 
     this.validateTimeRange(startTime, endTime);
     await this.validateNoDuplicateRecurring(
@@ -50,12 +56,19 @@ export class AvailabilityService {
       endTime,
     );
 
-    const availability = this.recurringAvailabilityRepository.create({
-      doctorProfile,
-      dayOfWeek: dto.dayOfWeek,
-      startTime,
-      endTime,
-    });
+   const availability =
+  this.recurringAvailabilityRepository.create({
+    doctorProfile,
+    dayOfWeek: dto.dayOfWeek,
+    startTime,
+    endTime,
+    schedulingType:
+      dto.schedulingType,
+    bufferTime:
+      dto.bufferTime,
+    capacity:
+      dto.capacity,
+  });
 
     const saved = await this.recurringAvailabilityRepository.save(availability);
 
@@ -160,6 +173,11 @@ export class AvailabilityService {
     const date = this.normalizeDate(dto.date);
     const startTime = this.normalizeTime(dto.startTime);
     const endTime = this.normalizeTime(dto.endTime);
+    this.validateSchedulingConfiguration(
+  dto.schedulingType,
+  dto.bufferTime,
+  dto.capacity,
+);
 
     this.validateTimeRange(startTime, endTime);
     await this.validateNoDuplicateCustom(
@@ -175,13 +193,21 @@ export class AvailabilityService {
       endTime,
     );
 
-    const override = this.customAvailabilityRepository.create({
-      doctorProfile,
-      date,
-      startTime,
-      endTime,
-      reason: dto.reason,
-    });
+  const override =
+  this.customAvailabilityRepository.create({
+    doctorProfile,
+    date,
+    startTime,
+    endTime,
+    schedulingType:
+      dto.schedulingType,
+    bufferTime:
+      dto.bufferTime,
+    capacity:
+      dto.capacity,
+    reason:
+      dto.reason,
+  });
 
     const saved = await this.customAvailabilityRepository.save(override);
 
@@ -439,6 +465,40 @@ export class AvailabilityService {
     return dayMap[dayIndex];
   }
 
+  private validateSchedulingConfiguration(
+  schedulingType: SchedulingType,
+  bufferTime?: number,
+  capacity?: number,
+) {
+  if (
+    schedulingType ===
+    SchedulingType.STREAM
+  ) {
+    if (capacity !== undefined) {
+      throw new BadRequestException(
+        'Capacity is only applicable for WAVE scheduling',
+      );
+    }
+  }
+
+  if (
+    schedulingType ===
+    SchedulingType.WAVE
+  ) {
+    if (!capacity) {
+      throw new BadRequestException(
+        'Capacity is required for WAVE scheduling',
+      );
+    }
+
+    if (bufferTime !== undefined) {
+      throw new BadRequestException(
+        'Buffer time is only applicable for STREAM scheduling',
+      );
+    }
+  }
+}
+
   private toRecurringResponse(availability: RecurringAvailability) {
     return {
       id: availability.id,
@@ -448,6 +508,14 @@ export class AvailabilityService {
       isActive: availability.isActive,
       createdAt: availability.createdAt,
       updatedAt: availability.updatedAt,
+      schedulingType:
+  availability.schedulingType,
+
+bufferTime:
+  availability.bufferTime,
+
+capacity:
+  availability.capacity,
     };
   }
 
@@ -460,6 +528,15 @@ export class AvailabilityService {
       reason: availability.reason,
       createdAt: availability.createdAt,
       updatedAt: availability.updatedAt,
+      schedulingType:
+  availability.schedulingType,
+
+bufferTime:
+  availability.bufferTime,
+
+capacity:
+  availability.capacity,
     };
   }
+  
 }

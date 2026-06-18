@@ -51,6 +51,12 @@ export class Appointment {
   endTime!: string;
 
   @Column({
+  type: 'int',
+  nullable: true,
+})
+tokenNumber?: number;
+
+  @Column({
     type: 'enum',
     enum: AppointmentStatus,
     default: AppointmentStatus.BOOKED,

@@ -7,7 +7,8 @@ import { AppointmentService } from './appointment.service';
 
 import { DoctorProfile } from '../doctor/entities/doctor-profile.entity';
 import { PatientProfile } from '../patient/entities/patient-profile.entity';
-import { User } from '../auth/entities/user.entity';
+import { CustomAvailability } from '../doctor/entities/custom-availability.entity';
+import { RecurringAvailability } from '../doctor/entities/recurring-availability.entity';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { User } from '../auth/entities/user.entity';
       Appointment,
       DoctorProfile,
       PatientProfile,
-      User,
+      CustomAvailability,
+      RecurringAvailability,
     ]),
   ],
   controllers: [

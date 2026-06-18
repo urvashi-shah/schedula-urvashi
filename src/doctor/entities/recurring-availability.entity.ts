@@ -9,11 +9,12 @@ import {
 } from 'typeorm';
 import { DayOfWeek } from '../enums/day-of-week.enum';
 import { DoctorProfile } from './doctor-profile.entity';
+import { SchedulingType } from '../enums/scheduling-type.enum';
 
 @Entity()
 export class RecurringAvailability {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @ManyToOne(
     () => DoctorProfile,
@@ -21,26 +22,45 @@ export class RecurringAvailability {
     { onDelete: 'CASCADE' },
   )
   @JoinColumn({ name: 'doctorProfileId' })
-  doctorProfile: DoctorProfile;
+  doctorProfile!: DoctorProfile;
 
   @Column({
     type: 'enum',
     enum: DayOfWeek,
   })
-  dayOfWeek: DayOfWeek;
+  dayOfWeek!: DayOfWeek;
 
   @Column({ type: 'time' })
-  startTime: string;
+  startTime!: string;
 
   @Column({ type: 'time' })
-  endTime: string;
+  endTime!: string;
+
+  @Column({
+  type: 'enum',
+  enum: SchedulingType,
+  default: SchedulingType.STREAM,
+})
+schedulingType!: SchedulingType;
+
+@Column({
+  type: 'int',
+  nullable: true,
+})
+bufferTime?: number;
+
+@Column({
+  type: 'int',
+  nullable: true,
+})
+capacity?: number;
 
   @Column({ default: true })
-  isActive: boolean;
+  isActive!: boolean;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 }

@@ -14,6 +14,7 @@ import { CustomAvailability } from '../entities/custom-availability.entity';
 import { SlotStatus } from '../enums/slot-status.enum';
 import { Appointment } from '../../appointment/entities/appointment.entity';
 import { AppointmentStatus } from '../../appointment/enums/appointment-status.enum';
+import { SchedulingType } from '../enums/scheduling-type.enum';
 
 @Injectable()
 export class SlotService {
@@ -128,12 +129,13 @@ private generateSlots(
   startTime: string,
   endTime: string,
   slotDuration: number,
+  bufferTime = 0,
 ) {
   const slots: {
-  startTime: string;
-  endTime: string;
-  status: string;
-}[] = [];
+    startTime: string;
+    endTime: string;
+    status: string;
+  }[] = [];
 
   const start = new Date(
     `2000-01-01T${startTime}`,
@@ -167,7 +169,10 @@ private generateSlots(
       status: SlotStatus.AVAILABLE,
     });
 
-    current = slotEnd;
+    current = new Date(
+      slotEnd.getTime() +
+        bufferTime * 60 * 1000,
+    );
   }
 
   return slots;
@@ -212,21 +217,53 @@ const resolvedAvailability =
   const slotDuration =
   doctor.slotDuration;
 
-  const allSlots: {
+const allSlots: {
   startTime: string;
   endTime: string;
   status: string;
 }[] = [];
 
-  for (const availability of
+const waveAvailabilities: any[] = [];
+
+for (const availability of
   resolvedAvailability.availabilities) {
 
-  const generatedSlots =
-    this.generateSlots(
-      availability.startTime,
-      availability.endTime,
-      slotDuration,
+  if (
+    availability.schedulingType ===
+    SchedulingType.WAVE
+  ) {
+    const bookedCount =
+      await this.appointmentRepository.count({
+        where: {
+          doctorProfile: {
+            id: doctorId,
+          },
+          date,
+          status:
+            AppointmentStatus.BOOKED,
+        },
+      });
+
+    waveAvailabilities.push(
+      this.generateWaveAvailability(
+        availability.startTime,
+        availability.endTime,
+        availability.capacity ?? 0,
+        bookedCount,
+      ),
     );
+
+    continue;
+  }
+
+  const generatedSlots =
+  this.generateSlots(
+    availability.startTime,
+    availability.endTime,
+    slotDuration,
+    availability.bufferTime ?? 0,
+  );
+
 
   allSlots.push(
     ...generatedSlots,
@@ -273,12 +310,15 @@ if (date === currentDate) {
       .slice(0, 5);
 
   filteredSlots =
-    allSlots.filter(
+    filteredSlots.filter(
       (slot) =>
         slot.startTime >= currentTime,
     );
 }
-if (filteredSlots.length === 0) {
+if (
+  filteredSlots.length === 0 &&
+  waveAvailabilities.length === 0
+) {
   return {
     message:
       'No available slots found for this date',
@@ -287,10 +327,29 @@ if (filteredSlots.length === 0) {
     slots: [],
   };
 }
+if (waveAvailabilities.length > 0) {
+  return {
+    doctorId,
+    date,
+    schedulingType:
+      SchedulingType.WAVE,
+
+    source:
+      resolvedAvailability.source,
+
+    waves:
+      waveAvailabilities,
+  };
+}
+
 return {
   doctorId,
   date,
+  schedulingType:
+    SchedulingType.STREAM,
+
   slotDuration,
+
   source:
     resolvedAvailability.source,
 
@@ -302,5 +361,25 @@ return {
 
   slots: filteredSlots,
 };
+}
+private generateWaveAvailability(
+  startTime: string,
+  endTime: string,
+  capacity: number,
+  bookedCount: number,
+) {
+  return {
+    schedulingType:
+      SchedulingType.WAVE,
+
+    startTime,
+
+    endTime,
+
+    capacity,
+
+    available:
+      capacity - bookedCount,
+  };
 }
 }

@@ -12,6 +12,8 @@ import { DoctorProfile } from '../entities/doctor-profile.entity';
 import { RecurringAvailability } from '../entities/recurring-availability.entity';
 import { CustomAvailability } from '../entities/custom-availability.entity';
 import { SlotStatus } from '../enums/slot-status.enum';
+import { Appointment } from '../../appointment/entities/appointment.entity';
+import { AppointmentStatus } from '../../appointment/enums/appointment-status.enum';
 
 @Injectable()
 export class SlotService {
@@ -26,6 +28,10 @@ export class SlotService {
     @InjectRepository(CustomAvailability)
     private readonly customAvailabilityRepository:
       Repository<CustomAvailability>,
+
+    @InjectRepository(Appointment)
+    private readonly appointmentRepository:
+      Repository<Appointment>,
   ) {}
 
   async getDoctorProfile(
@@ -231,6 +237,30 @@ let filteredSlots: {
   endTime: string;
   status: string;
 }[] = allSlots;
+
+const bookedAppointments =
+  await this.appointmentRepository.find({
+    where: {
+      doctorProfile: {
+        id: doctorId,
+      },
+      date,
+      status:
+        AppointmentStatus.BOOKED,
+    },
+  });
+
+filteredSlots =
+  filteredSlots.filter(
+    (slot) =>
+      !bookedAppointments.some(
+        (appointment) =>
+          appointment.startTime
+            .toString()
+            .slice(0, 5) ===
+          slot.startTime,
+      ),
+  );
 
 const currentDate = new Date()
   .toISOString()

@@ -4,6 +4,8 @@ import { DataSource } from 'typeorm';
 
 import { User } from '../auth/entities/user.entity';
 import { DoctorProfile } from '../doctor/entities/doctor-profile.entity';
+import { RecurringAvailability } from '../doctor/entities/recurring-availability.entity';
+import { CustomAvailability } from '../doctor/entities/custom-availability.entity';
 import { PatientProfile } from '../patient/entities/patient-profile.entity';
 
 dotenv.config();
@@ -19,6 +21,8 @@ export const AppDataSource = new DataSource({
   entities: [
     User,
     DoctorProfile,
+    RecurringAvailability,
+    CustomAvailability,
     PatientProfile,
   ],
 

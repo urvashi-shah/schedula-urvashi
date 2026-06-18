@@ -1,0 +1,3100 @@
+{
+  "info": {
+    "_postman_id": "231ca051-2e8b-4c49-aff3-45b31d85d5f6",
+    "name": "Schedula API",
+    "description": "Doctor and Patient Onboarding, Discovery, and AI Recommendation APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43568251",
+    "_collection_link": "https://go.postman.co/collection/43568251-231ca051-2e8b-4c49-aff3-45b31d85d5f6?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "/",
+      "item": [
+        {
+          "name": "App Controller get Hello",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ""
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Untitled Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ""
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "health",
+      "item": [
+        {
+          "name": "App Controller get Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Untitled Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "signup",
+          "item": [
+            {
+              "name": "Register a new user",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Urvashi Shah\",\n  \"email\": \"urvashi@gmail.com\",\n  \"password\": \"Password@123\",\n  \"role\": \"DOCTOR\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/auth/signup",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "signup"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Urvashi Shah\",\n  \"email\": \"urvashi@gmail.com\",\n  \"password\": \"Password@123\",\n  \"role\": \"DOCTOR\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/signup",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "signup"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "login",
+          "item": [
+            {
+              "name": "Login and get JWT token",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"urvashi@gmail.com\",\n  \"password\": \"Password@123\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"urvashi@gmail.com\",\n  \"password\": \"Password@123\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/login",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "login"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "doctor",
+      "item": [
+        {
+          "name": "profile",
+          "item": [
+            {
+              "name": "Create doctor profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fullName\": \"Dr. John Doe\",\n  \"specialization\": \"Cardiologist\",\n  \"experience\": 10,\n  \"qualification\": \"MBBS, MD\",\n  \"consultationFee\": 500,\n  \"slotDuration\": 15,\n  \"availability\": \"Mon-Fri 9AM-5PM\",\n  \"profileDetails\": \"Experienced heart specialist with 10 years of practice\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/doctor/profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor",
+                    "profile"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"fullName\": \"Dr. John Doe\",\n  \"specialization\": \"Cardiologist\",\n  \"experience\": 10,\n  \"qualification\": \"MBBS, MD\",\n  \"consultationFee\": 500,\n  \"slotDuration\": 15,\n  \"availability\": \"Mon-Fri 9AM-5PM\",\n  \"profileDetails\": \"Experienced heart specialist with 10 years of practice\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/profile",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "profile"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "Get doctor profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/doctor/profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor",
+                    "profile"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/profile",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "profile"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "Update doctor profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/doctor/profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor",
+                    "profile"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/profile",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "profile"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "appointments",
+          "item": [
+            {
+              "name": "Get doctor appointments",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/doctor/appointments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor",
+                    "appointments"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/appointments",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "appointments"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "availability",
+          "item": [
+            {
+              "name": "date",
+              "item": [
+                {
+                  "name": "Get availability for a specific date",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability/date?date=2026-06-15",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability",
+                        "date"
+                      ],
+                      "query": [
+                        {
+                          "key": "date",
+                          "value": "2026-06-15",
+                          "description": "Date in YYYY-MM-DD format"
+                        }
+                      ]
+                    },
+                    "description": "Returns custom availability overrides for the date when present; otherwise returns recurring availability for that weekday."
+                  },
+                  "response": [
+                    {
+                      "name": "Resolved availability returned successfully",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/date?date=2026-06-15",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "date"
+                          ],
+                          "query": [
+                            {
+                              "description": "Date in YYYY-MM-DD format",
+                              "key": "date",
+                              "value": "2026-06-15"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Invalid date format",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/date?date=2026-06-15",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "date"
+                          ],
+                          "query": [
+                            {
+                              "description": "Date in YYYY-MM-DD format",
+                              "key": "date",
+                              "value": "2026-06-15"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/date?date=2026-06-15",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "date"
+                          ],
+                          "query": [
+                            {
+                              "description": "Date in YYYY-MM-DD format",
+                              "key": "date",
+                              "value": "2026-06-15"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Forbidden - doctor role required",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/date?date=2026-06-15",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "date"
+                          ],
+                          "query": [
+                            {
+                              "description": "Date in YYYY-MM-DD format",
+                              "key": "date",
+                              "value": "2026-06-15"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Doctor profile not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/date?date=2026-06-15",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "date"
+                          ],
+                          "query": [
+                            {
+                              "description": "Date in YYYY-MM-DD format",
+                              "key": "date",
+                              "value": "2026-06-15"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "override",
+              "item": [
+                {
+                  "name": "Create custom availability override",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"date\": \"2026-06-15\",\n  \"startTime\": \"14:00\",\n  \"endTime\": \"16:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"reason\": \"Extended evening clinic\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability/override",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability",
+                        "override"
+                      ]
+                    },
+                    "description": "Creates a date-specific availability override that takes precedence over recurring availability."
+                  },
+                  "response": [
+                    {
+                      "name": "Custom availability override created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"date\": \"2026-06-15\",\n  \"startTime\": \"14:00\",\n  \"endTime\": \"16:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"reason\": \"Extended evening clinic\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/override",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "override"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Invalid time range, date, or duplicate override",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"date\": \"2026-06-15\",\n  \"startTime\": \"14:00\",\n  \"endTime\": \"16:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"reason\": \"Extended evening clinic\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/override",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "override"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"date\": \"2026-06-15\",\n  \"startTime\": \"14:00\",\n  \"endTime\": \"16:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"reason\": \"Extended evening clinic\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/override",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "override"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Forbidden - doctor role required",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"date\": \"2026-06-15\",\n  \"startTime\": \"14:00\",\n  \"endTime\": \"16:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"reason\": \"Extended evening clinic\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/override",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "override"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Doctor profile not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"date\": \"2026-06-15\",\n  \"startTime\": \"14:00\",\n  \"endTime\": \"16:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"reason\": \"Extended evening clinic\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/override",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            "override"
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Update recurring availability window",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true,\n  \"isActive\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "2469.326537299639",
+                          "description": "Recurring availability record ID"
+                        }
+                      ]
+                    },
+                    "description": "Updates an existing recurring availability window owned by the authenticated doctor."
+                  },
+                  "response": [
+                    {
+                      "name": "Recurring availability updated successfully",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true,\n  \"isActive\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639",
+                              "description": "Recurring availability record ID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Invalid time range, duplicate window, or overlapping window",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true,\n  \"isActive\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639",
+                              "description": "Recurring availability record ID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true,\n  \"isActive\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639",
+                              "description": "Recurring availability record ID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Forbidden - not the owner of this availability",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true,\n  \"isActive\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639",
+                              "description": "Recurring availability record ID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Recurring availability or doctor profile not found",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true,\n  \"isActive\": true\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639",
+                              "description": "Recurring availability record ID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    }
+                  ]
+                },
+                {
+                  "name": "Delete recurring availability window",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "2469.326537299639",
+                          "description": "Recurring availability record ID"
+                        }
+                      ]
+                    },
+                    "description": "Deletes a recurring availability window owned by the authenticated doctor."
+                  },
+                  "response": [
+                    {
+                      "name": "Recurring availability deleted successfully",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639",
+                              "description": "Recurring availability record ID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Unauthorized",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639",
+                              "description": "Recurring availability record ID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Forbidden - not the owner of this availability",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639",
+                              "description": "Recurring availability record ID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    },
+                    {
+                      "name": "Recurring availability or doctor profile not found",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/availability/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            "availability",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639",
+                              "description": "Recurring availability record ID"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Create recurring availability window",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/doctor/availability",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor",
+                    "availability"
+                  ]
+                },
+                "description": "Adds a weekly recurring consultation window for the authenticated doctor."
+              },
+              "response": [
+                {
+                  "name": "Recurring availability created successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Invalid time range, duplicate window, or overlapping window",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Forbidden - doctor role required",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Doctor profile not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dayOfWeek\": \"MONDAY\",\n  \"startTime\": \"10:00\",\n  \"endTime\": \"13:00\",\n  \"schedulingType\": \"STREAM\",\n  \"bufferTime\": 5,\n  \"capacity\": 10,\n  \"applyToWeekdays\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "Get all recurring availability windows",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/doctor/availability",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor",
+                    "availability"
+                  ]
+                },
+                "description": "Returns every recurring availability window configured by the authenticated doctor."
+              },
+              "response": [
+                {
+                  "name": "Recurring availability list returned successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Forbidden - doctor role required",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Doctor profile not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/availability",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "availability"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "recommend",
+          "item": [
+            {
+              "name": "Get AI-powered doctor recommendations from symptoms",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"symptoms\": \"I have stomach pain and bloating\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/doctor/recommend",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor",
+                    "recommend"
+                  ]
+                },
+                "description": "Maps patient symptoms to relevant specialties using OpenAI, then returns the top 3 most experienced matching doctors. Public endpoint — no authentication required."
+              },
+              "response": [
+                {
+                  "name": "Doctor recommendations based on symptoms",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"symptoms\": \"I have stomach pain and bloating\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/recommend",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "recommend"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"summary\": \"Digestive symptoms are commonly handled by Gastroenterologists.\",\n  \"matched_specialties\": [\n    {\n      \"specialty\": \"Gastroenterologist\",\n      \"reason\": \"Digestive and stomach-related symptoms are commonly treated by Gastroenterologists.\"\n    },\n    {\n      \"specialty\": \"Gastroenterologist\",\n      \"reason\": \"Digestive and stomach-related symptoms are commonly treated by Gastroenterologists.\"\n    }\n  ],\n  \"recommendedDoctors\": [\n    {\n      \"id\": 1,\n      \"fullName\": \"Dr. Rahul Sharma\",\n      \"specialization\": \"Cardiologist\",\n      \"experience\": 10,\n      \"consultationFee\": 500,\n      \"availability\": \"Mon-Fri 9AM-5PM\"\n    },\n    {\n      \"id\": 1,\n      \"fullName\": \"Dr. Rahul Sharma\",\n      \"specialization\": \"Cardiologist\",\n      \"experience\": 10,\n      \"consultationFee\": 500,\n      \"availability\": \"Mon-Fri 9AM-5PM\"\n    }\n  ],\n  \"fallbackDoctors\": [\n    {\n      \"id\": 1,\n      \"fullName\": \"Dr. Rahul Sharma\",\n      \"specialization\": \"Cardiologist\",\n      \"experience\": 10,\n      \"consultationFee\": 500,\n      \"availability\": \"Mon-Fri 9AM-5PM\"\n    },\n    {\n      \"id\": 1,\n      \"fullName\": \"Dr. Rahul Sharma\",\n      \"specialization\": \"Cardiologist\",\n      \"experience\": 10,\n      \"consultationFee\": 500,\n      \"availability\": \"Mon-Fri 9AM-5PM\"\n    }\n  ]\n}"
+                },
+                {
+                  "name": "Invalid symptoms input",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"symptoms\": \"I have stomach pain and bloating\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/recommend",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "recommend"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Invalid OpenAI response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"symptoms\": \"I have stomach pain and bloating\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/recommend",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "recommend"
+                      ]
+                    }
+                  },
+                  "status": "Bad Gateway",
+                  "code": 502,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Recommendation service unavailable or OpenAI failure",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"symptoms\": \"I have stomach pain and bloating\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/recommend",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        "recommend"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "Get doctor details by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/doctor/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1",
+                      "description": "Doctor ID"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Complete doctor profile",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "1",
+                          "description": "Doctor ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                },
+                {
+                  "name": "Doctor not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "1",
+                          "description": "Doctor ID"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "{doctorId}",
+          "item": [
+            {
+              "name": "slots",
+              "item": [
+                {
+                  "name": "Get available slots for a doctor",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/doctor/:doctorId/slots?date=2026-06-22",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "doctor",
+                        ":doctorId",
+                        "slots"
+                      ],
+                      "query": [
+                        {
+                          "key": "date",
+                          "value": "2026-06-22",
+                          "description": "Date in YYYY-MM-DD format"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "doctorId",
+                          "value": "51",
+                          "description": "Doctor profile id"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Untitled Response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/doctor/:doctorId/slots?date=2026-06-22",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "doctor",
+                            ":doctorId",
+                            "slots"
+                          ],
+                          "query": [
+                            {
+                              "description": "Date in YYYY-MM-DD format",
+                              "key": "date",
+                              "value": "2026-06-22"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "doctorId",
+                              "value": "51",
+                              "description": "Doctor profile id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "List doctors with search, filters, and pagination",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/doctor?search=rahul&specialization=ENT_SPECIALIST&page=1&limit=10&availability=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "doctor"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "rahul",
+                  "description": "Search by doctor name (partial, case-insensitive)"
+                },
+                {
+                  "key": "specialization",
+                  "value": "ENT_SPECIALIST",
+                  "description": "Filter by specialization"
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (default: 1)"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Results per page (default: 10)"
+                },
+                {
+                  "key": "availability",
+                  "value": "true",
+                  "description": "Filter by availability. true = doctors with availability data"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Paginated list of doctors",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/doctor?search=rahul&specialization=ENT_SPECIALIST&page=1&limit=10&availability=true",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor"
+                  ],
+                  "query": [
+                    {
+                      "description": "Search by doctor name (partial, case-insensitive)",
+                      "key": "search",
+                      "value": "rahul"
+                    },
+                    {
+                      "description": "Filter by specialization",
+                      "key": "specialization",
+                      "value": "ENT_SPECIALIST"
+                    },
+                    {
+                      "description": "Page number (default: 1)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Results per page (default: 10)",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Filter by availability. true = doctors with availability data",
+                      "key": "availability",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": 1,\n      \"fullName\": \"Dr. Rahul Sharma\",\n      \"specialization\": \"Cardiologist\",\n      \"experience\": 10,\n      \"consultationFee\": 500,\n      \"availability\": \"Mon-Fri 9AM-5PM\"\n    },\n    {\n      \"id\": 1,\n      \"fullName\": \"Dr. Rahul Sharma\",\n      \"specialization\": \"Cardiologist\",\n      \"experience\": 10,\n      \"consultationFee\": 500,\n      \"availability\": \"Mon-Fri 9AM-5PM\"\n    }\n  ],\n  \"page\": 1,\n  \"limit\": 10,\n  \"total\": 100,\n  \"totalPages\": 10\n}"
+            },
+            {
+              "name": "Invalid query parameters",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/doctor?search=rahul&specialization=ENT_SPECIALIST&page=1&limit=10&availability=true",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "doctor"
+                  ],
+                  "query": [
+                    {
+                      "description": "Search by doctor name (partial, case-insensitive)",
+                      "key": "search",
+                      "value": "rahul"
+                    },
+                    {
+                      "description": "Filter by specialization",
+                      "key": "specialization",
+                      "value": "ENT_SPECIALIST"
+                    },
+                    {
+                      "description": "Page number (default: 1)",
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "description": "Results per page (default: 10)",
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "description": "Filter by availability. true = doctors with availability data",
+                      "key": "availability",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "appointment",
+      "item": [
+        {
+          "name": "my",
+          "item": [
+            {
+              "name": "Get my appointments",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/appointment/my",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "appointment",
+                    "my"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/appointment/my",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointment",
+                        "my"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "cancel",
+              "item": [
+                {
+                  "name": "Cancel appointment",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PATCH",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/appointment/:id/cancel",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointment",
+                        ":id",
+                        "cancel"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "2469.326537299639"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Untitled Response",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/appointment/:id/cancel",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "appointment",
+                            ":id",
+                            "cancel"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "reschedule",
+              "item": [
+                {
+                  "name": "Reschedule appointment",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/appointment/:id/reschedule",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "appointment",
+                        ":id",
+                        "reschedule"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "2469.326537299639"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Untitled Response",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/appointment/:id/reschedule",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "appointment",
+                            ":id",
+                            "reschedule"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "2469.326537299639"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Book appointment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctorId\": 51,\n  \"date\": \"2026-06-22\",\n  \"startTime\": \"10:00:00\",\n  \"endTime\": \"11:00:00\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/appointment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "appointment"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Untitled Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"doctorId\": 51,\n  \"date\": \"2026-06-22\",\n  \"startTime\": \"10:00:00\",\n  \"endTime\": \"11:00:00\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/appointment",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "appointment"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "patient",
+      "item": [
+        {
+          "name": "profile",
+          "item": [
+            {
+              "name": "Create patient profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"fullName\": \"Urvashi Shah\",\n  \"age\": 23,\n  \"gender\": \"Female\",\n  \"contactDetails\": \"+91 9876543210\",\n  \"healthInformation\": \"No known allergies\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/patient/profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "patient",
+                    "profile"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"fullName\": \"Urvashi Shah\",\n  \"age\": 23,\n  \"gender\": \"Female\",\n  \"contactDetails\": \"+91 9876543210\",\n  \"healthInformation\": \"No known allergies\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/patient/profile",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "patient",
+                        "profile"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "Get patient profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/patient/profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "patient",
+                    "profile"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/patient/profile",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "patient",
+                        "profile"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            },
+            {
+              "name": "Update patient profile",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/patient/profile",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "patient",
+                    "profile"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Untitled Response",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/patient/profile",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "patient",
+                        "profile"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/"
+    }
+  ]
+}

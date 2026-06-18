@@ -49,6 +49,17 @@ import {
       },
     )
     consultationFee: number;
+
+    @ApiProperty({
+  example: 15,
+})
+@IsNumber(
+  {},
+  {
+    message: 'Slot duration should be a number',
+  },
+)
+slotDuration: number;
   
     @ApiProperty({
       example: 'Mon-Fri 9AM-5PM',

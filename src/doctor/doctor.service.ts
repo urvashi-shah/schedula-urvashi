@@ -105,6 +105,7 @@ export class DoctorService {
                 experience: savedProfile.experience,
                 qualification: savedProfile.qualification,
                 consultationFee: savedProfile.consultationFee,
+                slotDuration: savedProfile.slotDuration,
                 availability: savedProfile.availability,
                 profileDetails: savedProfile.profileDetails,
             },

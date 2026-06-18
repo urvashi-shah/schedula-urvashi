@@ -22,6 +22,7 @@ import { AppointmentService } from '../appointment/appointment.service';
 import { JwtGuard } from '../auth/jwt/jwt.guard';
 import { RolesGuard } from '../auth/roles/roles.guard';
 import { Roles } from '../auth/roles/roles.decorator';
+import { RescheduleAppointmentDto } from './dto/reschedule-appointment.dto';
 
 
 @ApiTags('Appointments')
@@ -95,5 +96,42 @@ cancelAppointment(
     id,
     req.user,
   );
+}
+
+@ApiOperation({
+  summary:
+    'Reschedule appointment',
+})
+@Roles('PATIENT')
+@UseGuards(
+  JwtGuard,
+  RolesGuard,
+)
+@Patch(':id/reschedule')
+rescheduleAppointment(
+
+  @Param(
+    'id',
+    ParseIntPipe,
+  )
+  id: number,
+
+  @Body()
+  dto: RescheduleAppointmentDto,
+
+  @Req()
+  req,
+
+) {
+  return this.appointmentService
+    .rescheduleAppointment(
+
+      id,
+
+      dto,
+
+      req.user,
+
+    );
 }
 }

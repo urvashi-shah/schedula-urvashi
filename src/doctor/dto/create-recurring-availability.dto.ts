@@ -75,4 +75,12 @@ export class CreateRecurringAvailabilityDto {
   @IsInt()
   @Min(1)
   capacity?: number;
+
+  @ApiPropertyOptional({
+  example: true,
+  description:
+    'Apply the same availability to Monday-Friday',
+})
+@IsOptional()
+applyToWeekdays?: boolean;
 }

@@ -1,119 +1,293 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🩺 Schedula
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+### Intelligent Healthcare Appointment Scheduling Platform
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Schedula is a healthcare appointment scheduling backend built using NestJS, PostgreSQL, JWT Authentication, OpenAI APIs, and advanced scheduling strategies.
 
-## Description
+The platform enables doctor and patient onboarding, doctor discovery, intelligent recommendations, appointment booking, slot generation, and appointment rescheduling with multiple validation checks.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+# 🚀 Live Deployment
 
-```bash
-$ npm install
+### Base URL
+
+https://schedula-project-urvashi.onrender.com
+
+### Swagger Documentation
+
+https://schedula-project-urvashi.onrender.com/api
+
+### Health Check Endpoint
+
+https://schedula-project-urvashi.onrender.com/health
+
+---
+
+# 📌 Project Overview
+
+Schedula simplifies healthcare appointment management by providing a scalable backend system for doctors and patients.
+
+The system supports:
+
+* User Authentication
+* Doctor & Patient Profile Management
+* Doctor Discovery
+* AI-powered Doctor Recommendations
+* Availability Management
+* Automatic Slot Generation
+* Appointment Booking
+* Appointment Cancellation
+* Appointment Rescheduling
+* Advanced Scheduling Strategies
+
+---
+
+# 🛠 Tech Stack
+
+| Category          | Technologies      |
+| ----------------- | ----------------- |
+| Backend Framework | NestJS            |
+| Language          | TypeScript        |
+| Database          | PostgreSQL (Neon) |
+| ORM               | TypeORM           |
+| Authentication    | JWT               |
+| API Documentation | Swagger           |
+| API Testing       | Postman           |
+| Deployment        | Render            |
+| AI Integration    | OpenAI API        |
+
+---
+
+# ⚙️ Environment Variables
+
+Create a `.env` file and add the following variables:
+
+```env
+DATABASE_URL=
+
+JWT_SECRET=
+
+OPENAI_API_KEY=
+
+PORT=
 ```
 
-## Compile and run the project
+---
+
+# 🔧 Project Setup
+
+Clone the repository
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone https://github.com/urvashi-shah/schedula-urvashi.git
 ```
 
-## Run tests
+Move to project directory
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cd schedula-urvashi
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Install dependencies
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Run database migrations
 
-## Resources
+```bash
+npm run migration:run
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+Start development server
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+npm run start:dev
+```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# 🧩 Features Implemented
 
-## Stay in touch
+## Authentication
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+✅ User Registration
 
-## License
+✅ User Login
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+✅ JWT Authentication
 
-Day 1 Internship Submission
-(Previous Day 1 work)
+✅ Role-Based Authorization
 
-## Day 2 Internship Submission
+---
 
-### Features Implemented
+## Doctor Module
 
-* User Registration (Doctor and Patient)
-* User Login with JWT Authentication
-* Password Hashing using bcrypt
-* PostgreSQL Integration using TypeORM
-* Protected Routes using JWT Guard
-* Role-Based Authorization
+✅ Create Doctor Profile
 
-### Additional Enhancements
+✅ Get Doctor Profile
 
-* DTOs for structured request handling
-* Duplicate email validation with HTTP 409 Conflict response
-* Logging for signup and login activities
+✅ Update Doctor Profile
 
+---
+
+## Patient Module
+
+✅ Create Patient Profile
+
+✅ Get Patient Profile
+
+✅ Update Patient Profile
+
+---
+
+## Doctor Discovery
+
+✅ Search Doctors
+
+✅ Filter by Specialization
+
+✅ Pagination Support
+
+---
+
+## AI Recommendation
+
+✅ Symptom-Based Doctor Recommendation
+
+✅ OpenAI Assisted Matching
+
+✅ Fallback Recommendations
+
+---
+
+## Availability Management
+
+✅ Create Recurring Availability
+
+✅ Update Recurring Availability
+
+✅ Delete Recurring Availability
+
+✅ Create Custom Availability Override
+
+✅ Get Availability for Specific Date
+
+---
+
+## Slot Generation
+
+✅ Automatic Slot Generation
+
+✅ Dynamic Slot Duration
+
+✅ Buffer Time Support
+
+✅ Patient Slot View
+
+---
+
+## Appointment Management
+
+✅ Book Appointment
+
+✅ View My Appointments
+
+✅ Cancel Appointment
+
+✅ Reschedule Appointment
+
+---
+
+# 🧠 Advanced Scheduling
+
+### STREAM Scheduling
+
+Continuous patient flow with configurable buffer intervals between appointments.
+
+### WAVE Scheduling
+
+Allows multiple patients to be booked within the same appointment window.
+
+---
+
+# ✨ Validation Enhancements
+
+✅ Appointment overlap detection
+
+✅ Suggested alternative slots
+
+✅ Doctor unavailable recommendations
+
+✅ Prevent booking in past time slots
+
+✅ Prevent rescheduling cancelled appointments
+
+✅ Prevent rescheduling to the same slot
+
+✅ 30-minute cutoff validation for rescheduling
+
+✅ Sequential token number generation
+
+---
+
+# 📄 API Collection
+
+Postman Collection exported and included with the project submission.
+
+Collection File:
+
+```text
+Schedula_API.postman_collection.json
+```
+
+---
+
+# 🌿 Git Workflow
+
+Feature Branching Strategy was followed during development.
+
+Examples:
+
+```text
+feature/day6-doctor-availability
+
+feature/day7-slot-generation
+
+feature/day8-appointment-booking
+
+feature/day9-advanced-scheduling
+
+feature/day10-reschedule-enhancements
+```
+
+Changes were merged into the main branch through Pull Requests after implementation, testing, and review.
+
+---
+
+# 📚 Learning Outcomes
+
+This project helped in understanding:
+
+* NestJS Architecture
+* JWT Authentication
+* TypeORM and Database Migrations
+* Swagger API Documentation
+* Render Deployment
+* Neon PostgreSQL Integration
+* Git Branching Strategy
+* Pull Request Workflow
+* Advanced Scheduling Algorithms
+* Appointment Validation Techniques
+
+---
+
+# 👩‍💻 Developer
+
+**Urvashi Shah**
+
+Backend Engineering Intern
+
+Pearl Thoughts

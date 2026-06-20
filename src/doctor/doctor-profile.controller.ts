@@ -6,12 +6,16 @@ import {
     Body,
     Req,
     UseGuards,
+    Query,
+    Param,
+    ParseIntPipe,
 } from '@nestjs/common';
 
 import {
     ApiBearerAuth,
     ApiOperation,
     ApiTags,
+    ApiQuery,
 } from '@nestjs/swagger';
 
 import { JwtGuard } from '../auth/jwt/jwt.guard';
@@ -77,6 +81,11 @@ export class DoctorProfileController {
     @ApiOperation({
     summary: 'Get doctor appointments',
 })
+@ApiQuery({
+    name: 'date',
+    required: false,
+    example: '2026-06-23',
+})
 @Roles('DOCTOR')
 @UseGuards(
     JwtGuard,
@@ -85,8 +94,31 @@ export class DoctorProfileController {
 @Get('appointments')
 getAppointments(
     @Req() req,
+    @Query('date') date?: string,
 ) {
     return this.appointmentService.getDoctorAppointments(
+        req.user,
+        date,
+    );
+}
+
+@ApiOperation({
+    summary: 'Cancel appointment',
+})
+@Roles('DOCTOR')
+@UseGuards(
+    JwtGuard,
+    RolesGuard,
+)
+@Patch('appointments/:id/cancel')
+cancelAppointment(
+    @Param('id', ParseIntPipe)
+    id: number,
+
+    @Req() req,
+) {
+    return this.appointmentService.cancelDoctorAppointment(
+        id,
         req.user,
     );
 }

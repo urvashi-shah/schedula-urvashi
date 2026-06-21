@@ -19,6 +19,7 @@ import { CustomAvailability } from '../doctor/entities/custom-availability.entit
 import { RecurringAvailability } from '../doctor/entities/recurring-availability.entity';
 import { SchedulingType } from '../doctor/enums/scheduling-type.enum';
 import { RescheduleAppointmentDto } from './dto/reschedule-appointment.dto';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class AppointmentService {
@@ -44,7 +45,9 @@ export class AppointmentService {
             Repository<RecurringAvailability>,
         // @InjectRepository(User)
         // private readonly userRepository:
-        //   Repository<User>,
+        private readonly notificationService:
+    NotificationService,
+   
     ) { }
 
     async getPatientProfile(
@@ -1300,6 +1303,7 @@ const appointments =
             },
             relations: [
                 'doctorProfile',
+                'patientProfile',
             ],
         });
 
@@ -1333,6 +1337,15 @@ const appointments =
     await this.appointmentRepository.save(
         appointment,
     );
+
+    await this.notificationService.createNotification(
+
+    appointment.patientProfile.id,
+
+    'Appointment Cancelled',
+
+    `${doctorProfile.fullName} cancelled your appointment scheduled on ${appointment.date} at ${appointment.startTime.toString().slice(0,5)}.`
+);
 
     return {
         message:

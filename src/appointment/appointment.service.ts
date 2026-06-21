@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository } from 'typeorm';
+import { Repository , Not} from 'typeorm';
 
 import { Appointment } from './entities/appointment.entity';
 import { DoctorProfile } from '../doctor/entities/doctor-profile.entity';
@@ -19,6 +19,7 @@ import { CustomAvailability } from '../doctor/entities/custom-availability.entit
 import { RecurringAvailability } from '../doctor/entities/recurring-availability.entity';
 import { SchedulingType } from '../doctor/enums/scheduling-type.enum';
 import { RescheduleAppointmentDto } from './dto/reschedule-appointment.dto';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable()
 export class AppointmentService {
@@ -44,7 +45,9 @@ export class AppointmentService {
             Repository<RecurringAvailability>,
         // @InjectRepository(User)
         // private readonly userRepository:
-        //   Repository<User>,
+        private readonly notificationService:
+    NotificationService,
+   
     ) { }
 
     async getPatientProfile(
@@ -1117,6 +1120,7 @@ throw new ConflictException({
     }
     async getDoctorAppointments(
         user: { userId: number },
+        date?: string,
     ) {
         const doctorProfile =
             await this.doctorProfileRepository.findOne({
@@ -1133,12 +1137,17 @@ throw new ConflictException({
             );
         }
 
-        const appointments =
-            await this.appointmentRepository.find({
-                where: {
-                    doctorProfile: {
-                        id: doctorProfile.id,
-                    },
+const appointments =
+        await this.appointmentRepository.find({
+            where: {
+                doctorProfile: {
+                id: doctorProfile.id,
+                },
+
+                   status: Not(
+    AppointmentStatus.CANCELLED,
+),
+                    ...(date && { date }),
                 },
                 relations: [
                     'patientProfile',
@@ -1174,6 +1183,9 @@ throw new ConflictException({
                                 .slice(0, 5),
                         status:
                             appointment.status,
+                         
+                        tokenNumber:
+                           appointment.tokenNumber,    
                     }),
                 ),
         };
@@ -1265,6 +1277,81 @@ throw new ConflictException({
                 'Appointment cancelled successfully',
         };
     }
+ async cancelDoctorAppointment(
+    appointmentId: number,
+    user: { userId: number },
+) {
+    const doctorProfile =
+        await this.doctorProfileRepository.findOne({
+            where: {
+                user: {
+                    id: user.userId,
+                },
+            },
+        });
+
+    if (!doctorProfile) {
+        throw new NotFoundException(
+            'Doctor profile not found',
+        );
+    }
+
+    const appointment =
+        await this.appointmentRepository.findOne({
+            where: {
+                id: appointmentId,
+            },
+            relations: [
+                'doctorProfile',
+                'patientProfile',
+            ],
+        });
+
+    if (!appointment) {
+        throw new NotFoundException(
+            'Appointment not found',
+        );
+    }
+
+    if (
+        appointment.doctorProfile.id !==
+        doctorProfile.id
+    ) {
+        throw new ForbiddenException(
+            'You can only cancel your own appointments',
+        );
+    }
+
+    if (
+        appointment.status ===
+        AppointmentStatus.CANCELLED
+    ) {
+        throw new ConflictException(
+            'Appointment already cancelled',
+        );
+    }
+
+    appointment.status =
+        AppointmentStatus.CANCELLED;
+
+    await this.appointmentRepository.save(
+        appointment,
+    );
+
+    await this.notificationService.createNotification(
+
+    appointment.patientProfile.id,
+
+    'Appointment Cancelled',
+
+    `${doctorProfile.fullName} cancelled your appointment scheduled on ${appointment.date} at ${appointment.startTime.toString().slice(0,5)}.`
+);
+
+    return {
+        message:
+            'Appointment cancelled successfully',
+    };
+}
     async rescheduleAppointment(
         appointmentId: number,
         dto: RescheduleAppointmentDto,

@@ -8,6 +8,7 @@ import { RecurringAvailability } from '../doctor/entities/recurring-availability
 import { CustomAvailability } from '../doctor/entities/custom-availability.entity';
 import { PatientProfile } from '../patient/entities/patient-profile.entity';
 import { Appointment } from '../appointment/entities/appointment.entity';
+import { Notification } from '../notification/entities/notification.entity';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ export const AppDataSource = new DataSource({
     CustomAvailability,
     PatientProfile,
     Appointment,
+    Notification,
   ],
 
   migrations: ['src/database/migrations/*.ts'],

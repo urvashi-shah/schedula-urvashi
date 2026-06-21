@@ -12,6 +12,7 @@ import { DoctorModule } from './doctor/doctor.module';
 import { PatientModule } from './patient/patient.module';
 import { CorrelationIdMiddleware } from './common/middleware/correlation-id.middleware';
 import { AppointmentModule } from './appointment/appointment.module';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -29,6 +30,8 @@ TypeOrmModule.forRoot({
     DoctorModule,
     PatientModule,
     AppointmentModule,
+    NotificationModule,
+    
   ],
   controllers: [AppController],
   providers: [AppService],

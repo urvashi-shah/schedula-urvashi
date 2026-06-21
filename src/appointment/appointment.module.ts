@@ -9,6 +9,7 @@ import { DoctorProfile } from '../doctor/entities/doctor-profile.entity';
 import { PatientProfile } from '../patient/entities/patient-profile.entity';
 import { CustomAvailability } from '../doctor/entities/custom-availability.entity';
 import { RecurringAvailability } from '../doctor/entities/recurring-availability.entity';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { RecurringAvailability } from '../doctor/entities/recurring-availability
       CustomAvailability,
       RecurringAvailability,
     ]),
+    NotificationModule,
   ],
   controllers: [
     AppointmentController,

@@ -20,7 +20,7 @@ import { SlotService } from './services/slot.service';
 export class SlotController {
   constructor(
     private readonly slotService: SlotService,
-  ) {}
+  ) { }
 
   @ApiOperation({
     summary: 'Get available slots for a doctor',
@@ -49,6 +49,30 @@ export class SlotController {
     return this.slotService.getSlots(
       doctorId,
       date,
+    );
+  }
+  @ApiOperation({
+    summary:
+      'Find next available appointment date',
+  })
+  @ApiParam({
+    name: 'doctorId',
+    example: 51,
+    description:
+      'Doctor profile id',
+  })
+  @Get(
+    'doctor/:doctorId/next-available',
+  )
+  findNextAvailableDate(
+    @Param(
+      'doctorId',
+      ParseIntPipe,
+    )
+    doctorId: number,
+  ) {
+    return this.slotService.findNextAvailableDate(
+      doctorId,
     );
   }
 }

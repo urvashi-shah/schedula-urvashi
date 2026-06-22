@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository , Not} from 'typeorm';
+import { Repository, Not } from 'typeorm';
 
 import { Appointment } from './entities/appointment.entity';
 import { DoctorProfile } from '../doctor/entities/doctor-profile.entity';
@@ -46,8 +46,8 @@ export class AppointmentService {
         // @InjectRepository(User)
         // private readonly userRepository:
         private readonly notificationService:
-    NotificationService,
-   
+            NotificationService,
+
     ) { }
 
     async getPatientProfile(
@@ -109,32 +109,32 @@ export class AppointmentService {
 
             );
 
-       if (!availability) {
+        if (!availability) {
 
-  const suggestedSlot =
-    await this.findNextAvailableDateSlot(
+            const suggestedSlot =
+                await this.findNextAvailableDateSlot(
 
-      doctorProfile.id,
+                    doctorProfile.id,
 
-      createAppointmentDto.date,
+                    createAppointmentDto.date,
 
-    );
+                );
 
-  throw new NotFoundException({
+            throw new NotFoundException({
 
-    message:
-      'Doctor is not available on this date',
+                message:
+                    'Doctor is not available on this date',
 
-    suggestedSlot,
+                suggestedSlot,
 
-    note:
-      suggestedSlot
-        ? undefined
-        : 'No suitable slot available. Please select another date.',
+                note:
+                    suggestedSlot
+                        ? undefined
+                        : 'No suitable slot available. Please select another date.',
 
-  });
+            });
 
-}
+        }
 
         const appointmentDateTime =
             new Date(
@@ -210,55 +210,55 @@ export class AppointmentService {
             ) {
                 const durationInMinutes =
 
-  (
-    new Date(
-      `1970-01-01T${availability.endTime}`,
-    ).getTime()
+                    (
+                        new Date(
+                            `1970-01-01T${availability.endTime}`,
+                        ).getTime()
 
-    -
+                        -
 
-    new Date(
-      `1970-01-01T${availability.startTime}`,
-    ).getTime()
+                        new Date(
+                            `1970-01-01T${availability.startTime}`,
+                        ).getTime()
 
-  )
+                    )
 
-  / 60000;
-
-
-
-const suggestedSlot =
-
-  await this.findNextAvailableSlot(
-
-    doctorProfile.id,
-
-    createAppointmentDto.date,
-
-    availability.endTime,
-
-    durationInMinutes,
-
-  );
+                    / 60000;
 
 
 
-throw new ConflictException({
+                const suggestedSlot =
 
-  message:
-    'Wave is full',
+                    await this.findNextAvailableSlot(
 
-  suggestedSlot,
+                        doctorProfile.id,
 
-  note:
+                        createAppointmentDto.date,
 
-    suggestedSlot
+                        availability.endTime,
 
-      ? undefined
+                        durationInMinutes,
 
-      : 'No suitable slot available on this day. Please select another date.',
+                    );
 
-});
+
+
+                throw new ConflictException({
+
+                    message:
+                        'Wave is full',
+
+                    suggestedSlot,
+
+                    note:
+
+                        suggestedSlot
+
+                            ? undefined
+
+                            : 'No suitable slot available on this day. Please select another date.',
+
+                });
             }
             const maxToken =
                 await this.getMaxTokenNumber(
@@ -291,63 +291,63 @@ throw new ConflictException({
                 },
             });
 
-     if (
-  availability.schedulingType ===
-    SchedulingType.STREAM &&
-  existingAppointment
-) {
+        if (
+            availability.schedulingType ===
+            SchedulingType.STREAM &&
+            existingAppointment
+        ) {
 
-  const durationInMinutes =
+            const durationInMinutes =
 
-    (
-      new Date(
-        `1970-01-01T${createAppointmentDto.endTime}`,
-      ).getTime()
+                (
+                    new Date(
+                        `1970-01-01T${createAppointmentDto.endTime}`,
+                    ).getTime()
 
-      -
+                    -
 
-      new Date(
-        `1970-01-01T${createAppointmentDto.startTime}`,
-      ).getTime()
+                    new Date(
+                        `1970-01-01T${createAppointmentDto.startTime}`,
+                    ).getTime()
 
-    )
+                )
 
-    / 60000;
+                / 60000;
 
 
 
-  const suggestedSlot =
+            const suggestedSlot =
 
-    await this.findNextAvailableSlot(
+                await this.findNextAvailableSlot(
 
-      doctorProfile.id,
+                    doctorProfile.id,
 
-      createAppointmentDto.date,
+                    createAppointmentDto.date,
 
-      existingAppointment.endTime,
+                    existingAppointment.endTime,
 
-      durationInMinutes,
+                    durationInMinutes,
 
-    );
+                );
 
-throw new ConflictException({
+            throw new ConflictException({
 
-    message:
-      'Slot already booked',
+                message:
+                    'Slot already booked',
 
-    suggestedSlot,
+                suggestedSlot,
 
-    note:
+                note:
 
-      suggestedSlot
+                    suggestedSlot
 
-        ? undefined
+                        ? undefined
 
-        : 'No suitable slot available on this day. Please select another date.',
+                        : 'No suitable slot available on this day. Please select another date.',
 
-  });
+            });
 
-}
+        }
 
         const appointment =
             this.appointmentRepository.create({
@@ -1137,16 +1137,16 @@ throw new ConflictException({
             );
         }
 
-const appointments =
-        await this.appointmentRepository.find({
-            where: {
-                doctorProfile: {
-                id: doctorProfile.id,
-                },
+        const appointments =
+            await this.appointmentRepository.find({
+                where: {
+                    doctorProfile: {
+                        id: doctorProfile.id,
+                    },
 
-                   status: Not(
-    AppointmentStatus.CANCELLED,
-),
+                    status: Not(
+                        AppointmentStatus.CANCELLED,
+                    ),
                     ...(date && { date }),
                 },
                 relations: [
@@ -1183,9 +1183,9 @@ const appointments =
                                 .slice(0, 5),
                         status:
                             appointment.status,
-                         
+
                         tokenNumber:
-                           appointment.tokenNumber,    
+                            appointment.tokenNumber,
                     }),
                 ),
         };
@@ -1248,8 +1248,8 @@ const appointments =
             ) /
             (1000 * 60);
 
-        
-            if (
+
+        if (
             appointmentDateTime <= now
         ) {
             throw new BadRequestException(
@@ -1277,80 +1277,428 @@ const appointments =
                 'Appointment cancelled successfully',
         };
     }
- async cancelDoctorAppointment(
-    appointmentId: number,
-    user: { userId: number },
-) {
-    const doctorProfile =
-        await this.doctorProfileRepository.findOne({
-            where: {
-                user: {
-                    id: user.userId,
+    async cancelDoctorAppointment(
+        appointmentId: number,
+        user: { userId: number },
+    ) {
+        const doctorProfile =
+            await this.doctorProfileRepository.findOne({
+                where: {
+                    user: {
+                        id: user.userId,
+                    },
                 },
-            },
-        });
+            });
 
-    if (!doctorProfile) {
-        throw new NotFoundException(
-            'Doctor profile not found',
+        if (!doctorProfile) {
+            throw new NotFoundException(
+                'Doctor profile not found',
+            );
+        }
+
+        const appointment =
+            await this.appointmentRepository.findOne({
+                where: {
+                    id: appointmentId,
+                },
+                relations: [
+                    'doctorProfile',
+                    'patientProfile',
+                ],
+            });
+
+        if (!appointment) {
+            throw new NotFoundException(
+                'Appointment not found',
+            );
+        }
+
+        if (
+            appointment.doctorProfile.id !==
+            doctorProfile.id
+        ) {
+            throw new ForbiddenException(
+                'You can only cancel your own appointments',
+            );
+        }
+
+        if (
+            appointment.status ===
+            AppointmentStatus.CANCELLED
+        ) {
+            throw new ConflictException(
+                'Appointment already cancelled',
+            );
+        }
+
+        appointment.status =
+            AppointmentStatus.CANCELLED;
+
+        await this.appointmentRepository.save(
+            appointment,
         );
-    }
 
-    const appointment =
-        await this.appointmentRepository.findOne({
-            where: {
-                id: appointmentId,
-            },
-            relations: [
-                'doctorProfile',
-                'patientProfile',
-            ],
-        });
+//        const suggestion =
+//     await this.findNextAvailableDateSlot(
 
-    if (!appointment) {
-        throw new NotFoundException(
-            'Appointment not found',
-        );
-    }
+//         doctorProfile.id,
 
-    if (
-        appointment.doctorProfile.id !==
-        doctorProfile.id
-    ) {
-        throw new ForbiddenException(
-            'You can only cancel your own appointments',
-        );
-    }
+//         appointment.date,
 
-    if (
-        appointment.status ===
-        AppointmentStatus.CANCELLED
-    ) {
-        throw new ConflictException(
-            'Appointment already cancelled',
-        );
-    }
+//     );
 
-    appointment.status =
-        AppointmentStatus.CANCELLED;
+// let notificationMessage =
 
-    await this.appointmentRepository.save(
-        appointment,
-    );
+//     `${doctorProfile.fullName} cancelled your appointment scheduled on ${appointment.date} at ${appointment.startTime.toString().slice(0,5)}.`;
 
-    await this.notificationService.createNotification(
+// if (
+
+//     suggestion
+
+// ) {
+
+//     notificationMessage +=
+
+//         `\n\nSuggested next slot:\n${suggestion.date}\n${suggestion.startTime} - ${suggestion.endTime}`;
+
+// }
+
+// await this.notificationService.createNotification(
+
+//     appointment.patientProfile.id,
+
+//     'Appointment Cancelled',
+
+//     notificationMessage,
+
+// );
+
+await this.notificationService.createNotification(
 
     appointment.patientProfile.id,
 
     'Appointment Cancelled',
 
     `${doctorProfile.fullName} cancelled your appointment scheduled on ${appointment.date} at ${appointment.startTime.toString().slice(0,5)}.`
+
 );
 
-    return {
-        message:
-            'Appointment cancelled successfully',
-    };
+        return {
+            message:
+                'Appointment cancelled successfully',
+        };
+    }
+    async cancelAppointmentsForDay(
+
+        date: string,
+
+        user: { userId: number },
+
+    ) {
+
+        const doctorProfile =
+
+            await this.doctorProfileRepository.findOne({
+
+                where: {
+
+                    user: {
+
+                        id: user.userId,
+
+                    },
+
+                },
+
+            });
+
+
+
+        if (!doctorProfile) {
+
+            throw new NotFoundException(
+
+                'Doctor profile not found',
+
+            );
+
+        }
+
+
+
+        const appointments =
+
+            await this.appointmentRepository.find({
+
+                where: {
+
+                    doctorProfile: {
+
+                        id: doctorProfile.id,
+
+                    },
+
+
+
+                    date,
+
+
+
+                    status:
+
+                        AppointmentStatus.BOOKED,
+
+                },
+
+
+
+                relations: [
+
+                    'patientProfile',
+
+                ],
+
+            });
+
+
+
+        if (
+
+            appointments.length === 0
+
+        ) {
+
+            throw new NotFoundException(
+
+                'No appointments found for this date',
+
+            );
+
+        }
+
+
+
+        for (
+
+            const appointment
+
+            of appointments
+
+        ) {
+
+            appointment.status =
+
+                AppointmentStatus.CANCELLED;
+
+
+
+            await this.appointmentRepository.save(
+
+                appointment,
+
+            );
+
+
+
+            await this.notificationService.createNotification(
+
+                appointment.patientProfile.id,
+
+
+
+                'Appointment Cancelled',
+
+
+
+                `${doctorProfile.fullName} cancelled your appointment scheduled on ${appointment.date} at ${appointment.startTime.toString().slice(0, 5)}.`,
+
+            );
+
+        }
+
+
+
+        return {
+
+            message:
+
+                `${appointments.length} appointments cancelled successfully`,
+
+        };
+
+    }
+    async cancelAppointmentsForRange(
+
+  date: string,
+
+  startTime: string,
+
+  endTime: string,
+
+  user: { userId: number },
+
+) {
+
+  const doctorProfile =
+    await this.doctorProfileRepository.findOne({
+
+      where: {
+
+        user: {
+
+          id: user.userId,
+
+        },
+
+      },
+
+    });
+
+  if (!doctorProfile) {
+
+    throw new NotFoundException(
+
+      'Doctor profile not found',
+
+    );
+
+  }
+
+  const appointments =
+    await this.appointmentRepository.find({
+
+      where: {
+
+        doctorProfile: {
+
+          id: doctorProfile.id,
+
+        },
+
+        date,
+
+        status:
+          AppointmentStatus.BOOKED,
+
+      },
+
+      relations: [
+
+        'patientProfile',
+
+      ],
+
+    });
+
+
+  const overlappingAppointments =
+
+    appointments.filter(
+
+      (appointment) =>
+
+        appointment.startTime
+          .toString()
+          .slice(0, 5)
+
+          <
+
+        endTime
+
+
+
+        &&
+
+
+
+        appointment.endTime
+          .toString()
+          .slice(0, 5)
+
+          >
+
+        startTime,
+
+    );
+
+
+  if (
+
+    overlappingAppointments.length === 0
+
+  ) {
+
+    throw new NotFoundException(
+
+      'No appointments found in this range',
+
+    );
+
+  }
+
+
+  for (
+
+    const appointment
+
+    of overlappingAppointments
+
+  ) {
+
+    appointment.status =
+
+      AppointmentStatus.CANCELLED;
+
+
+    await this.appointmentRepository.save(
+
+      appointment,
+
+    );
+
+
+    await this.notificationService.createNotification(
+
+      appointment.patientProfile.id,
+
+
+
+      'Appointment Cancelled',
+
+
+
+      `${doctorProfile.fullName} cancelled your appointment scheduled on ${appointment.date} at ${appointment.startTime.toString().slice(0,5)}.`,
+
+    );
+
+  }
+
+
+  return {
+
+    message:
+
+      `${overlappingAppointments.length} appointments cancelled successfully`,
+
+
+    date,
+
+
+    cancelledRange: {
+
+      startTime,
+
+      endTime,
+
+    },
+
+
+    notificationsSent:
+
+      overlappingAppointments.length,
+
+  };
+
 }
     async rescheduleAppointment(
         appointmentId: number,
@@ -1476,36 +1824,36 @@ const appointments =
             );
         if (!availability) {
 
-  const suggestedSlot =
+            const suggestedSlot =
 
-    await this.findNextAvailableDateSlot(
+                await this.findNextAvailableDateSlot(
 
-      appointment.doctorProfile.id,
+                    appointment.doctorProfile.id,
 
-      dto.date,
+                    dto.date,
 
-    );
+                );
 
 
 
-  throw new NotFoundException({
+            throw new NotFoundException({
 
-    message:
-      'Doctor is not available on this date',
+                message:
+                    'Doctor is not available on this date',
 
-    suggestedSlot,
+                suggestedSlot,
 
-    note:
+                note:
 
-      suggestedSlot
+                    suggestedSlot
 
-        ? undefined
+                        ? undefined
 
-        : 'No suitable slot available. Please select another date.',
+                        : 'No suitable slot available. Please select another date.',
 
-  });
+            });
 
-}
+        }
 
         let tokenNumber:
             number | null =
@@ -1557,64 +1905,64 @@ const appointments =
                 );
 
             if (
-    activeBookings.length >=
-    (availability.capacity ?? 0)
-) {
+                activeBookings.length >=
+                (availability.capacity ?? 0)
+            ) {
 
-    const durationInMinutes =
+                const durationInMinutes =
 
-        (
+                    (
 
-            new Date(
-                `1970-01-01T${availability.endTime}`,
-            ).getTime()
+                        new Date(
+                            `1970-01-01T${availability.endTime}`,
+                        ).getTime()
 
-            -
+                        -
 
-            new Date(
-                `1970-01-01T${availability.startTime}`,
-            ).getTime()
+                        new Date(
+                            `1970-01-01T${availability.startTime}`,
+                        ).getTime()
 
-        )
+                    )
 
-        / 60000;
-
-
-
-    const suggestedSlot =
-
-        await this.findNextAvailableSlot(
-
-            appointment.doctorProfile.id,
-
-            dto.date,
-
-            availability.endTime,
-
-            durationInMinutes,
-
-        );
+                    / 60000;
 
 
 
-    throw new ConflictException({
+                const suggestedSlot =
 
-        message:
-            'Wave is full',
+                    await this.findNextAvailableSlot(
 
-        suggestedSlot,
+                        appointment.doctorProfile.id,
 
-        note:
+                        dto.date,
 
-            suggestedSlot
+                        availability.endTime,
 
-                ? undefined
+                        durationInMinutes,
 
-                : 'No suitable slot available on this day. Please select another date.',
+                    );
 
-    });
 
-}
+
+                throw new ConflictException({
+
+                    message:
+                        'Wave is full',
+
+                    suggestedSlot,
+
+                    note:
+
+                        suggestedSlot
+
+                            ? undefined
+
+                            : 'No suitable slot available on this day. Please select another date.',
+
+                });
+
+            }
 
             const maxToken =
                 await this.getMaxTokenNumber(
@@ -1654,25 +2002,25 @@ const appointments =
                 },
             });
 
-if (
+        if (
 
-    availability.schedulingType ===
-    SchedulingType.STREAM &&
+            availability.schedulingType ===
+            SchedulingType.STREAM &&
 
-    existingAppointment &&
+            existingAppointment &&
 
-    existingAppointment.id !==
-    appointment.id
+            existingAppointment.id !==
+            appointment.id
 
-) {
+        ) {
 
-    throw new ConflictException(
+            throw new ConflictException(
 
-        'Slot already booked',
+                'Slot already booked',
 
-    );
+            );
 
-}
+        }
 
         appointment.date =
             dto.date;

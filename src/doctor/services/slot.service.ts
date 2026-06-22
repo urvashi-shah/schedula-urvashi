@@ -33,207 +33,250 @@ export class SlotService {
     @InjectRepository(Appointment)
     private readonly appointmentRepository:
       Repository<Appointment>,
-  ) {}
+  ) { }
 
   async getDoctorProfile(
-  doctorId: number,
-) {
-  const doctor =
-    await this.doctorProfileRepository.findOne({
-      where: {
-        id: doctorId,
-      },
-    });
+    doctorId: number,
+  ) {
+    const doctor =
+      await this.doctorProfileRepository.findOne({
+        where: {
+          id: doctorId,
+        },
+      });
 
-  if (!doctor) {
-    throw new NotFoundException(
-      'Doctor not found',
-    );
+    if (!doctor) {
+      throw new NotFoundException(
+        'Doctor not found',
+      );
+    }
+
+    return doctor;
   }
 
-  return doctor;
-}
+  private getDayOfWeek(
+    date: string,
+  ): string {
+    const days = [
+      'SUNDAY',
+      'MONDAY',
+      'TUESDAY',
+      'WEDNESDAY',
+      'THURSDAY',
+      'FRIDAY',
+      'SATURDAY',
+    ];
 
-private getDayOfWeek(
-  date: string,
-): string {
-  const days = [
-    'SUNDAY',
-    'MONDAY',
-    'TUESDAY',
-    'WEDNESDAY',
-    'THURSDAY',
-    'FRIDAY',
-    'SATURDAY',
-  ];
+    return days[new Date(date).getDay()];
+  }
 
-  return days[new Date(date).getDay()];
-}
+  async resolveAvailability(
+    doctorId: number,
+    date: string,
+  ) {
+    const doctor =
+      await this.getDoctorProfile(
+        doctorId,
+      );
 
-async resolveAvailability(
-  doctorId: number,
-  date: string,
-) {
-  const doctor =
-    await this.getDoctorProfile(
-      doctorId,
-    );
-
-  const customAvailabilities =
-    await this.customAvailabilityRepository.find({
-      where: {
-        doctorProfile: {
-          id: doctor.id,
+    const customAvailabilities =
+      await this.customAvailabilityRepository.find({
+        where: {
+          doctorProfile: {
+            id: doctor.id,
+          },
+          date,
         },
-        date,
-      },
-      order: {
-        startTime: 'ASC',
-      },
-    });
+        order: {
+          startTime: 'ASC',
+        },
+      });
 
-  if (customAvailabilities.length > 0) {
+    if (customAvailabilities.length > 0) {
+      return {
+        source: 'custom',
+        doctor,
+        availabilities: customAvailabilities,
+      };
+    }
+
+    const dayOfWeek =
+      this.getDayOfWeek(date);
+
+    const recurringAvailabilities =
+      await this.recurringAvailabilityRepository.find({
+        where: {
+          doctorProfile: {
+            id: doctor.id,
+          },
+          dayOfWeek: dayOfWeek as any,
+          isActive: true,
+        },
+        order: {
+          startTime: 'ASC',
+        },
+      });
+
     return {
-      source: 'custom',
+      source: 'recurring',
       doctor,
-      availabilities: customAvailabilities,
+      availabilities:
+        recurringAvailabilities,
     };
   }
 
-  const dayOfWeek =
-    this.getDayOfWeek(date);
-
-  const recurringAvailabilities =
-    await this.recurringAvailabilityRepository.find({
-      where: {
-        doctorProfile: {
-          id: doctor.id,
-        },
-        dayOfWeek: dayOfWeek as any,
-        isActive: true,
-      },
-      order: {
-        startTime: 'ASC',
-      },
-    });
-
-  return {
-    source: 'recurring',
-    doctor,
-    availabilities:
-      recurringAvailabilities,
-  };
-}
-
-private generateSlots(
-  startTime: string,
-  endTime: string,
-  slotDuration: number,
-  bufferTime = 0,
-) {
-  const slots: {
-    startTime: string;
-    endTime: string;
-    status: string;
-  }[] = [];
-
-  const start = new Date(
-    `2000-01-01T${startTime}`,
-  );
-
-  const end = new Date(
-    `2000-01-01T${endTime}`,
-  );
-
-  let current = new Date(start);
-
-  while (
-    current.getTime() +
-      slotDuration * 60 * 1000 <=
-    end.getTime()
+  private generateSlots(
+    startTime: string,
+    endTime: string,
+    slotDuration: number,
+    bufferTime = 0,
   ) {
-    const slotEnd = new Date(
+    const slots: {
+      startTime: string;
+      endTime: string;
+      status: string;
+    }[] = [];
+
+    const start = new Date(
+      `2000-01-01T${startTime}`,
+    );
+
+    const end = new Date(
+      `2000-01-01T${endTime}`,
+    );
+
+    let current = new Date(start);
+
+    while (
       current.getTime() +
+      slotDuration * 60 * 1000 <=
+      end.getTime()
+    ) {
+      const slotEnd = new Date(
+        current.getTime() +
         slotDuration * 60 * 1000,
-    );
+      );
 
-    slots.push({
-      startTime: current
-        .toTimeString()
-        .slice(0, 5),
+      slots.push({
+        startTime: current
+          .toTimeString()
+          .slice(0, 5),
 
-      endTime: slotEnd
-        .toTimeString()
-        .slice(0, 5),
+        endTime: slotEnd
+          .toTimeString()
+          .slice(0, 5),
 
-      status: SlotStatus.AVAILABLE,
-    });
+        status: SlotStatus.AVAILABLE,
+      });
 
-    current = new Date(
-      slotEnd.getTime() +
+      current = new Date(
+        slotEnd.getTime() +
         bufferTime * 60 * 1000,
-    );
+      );
+    }
+
+    return slots;
   }
 
-  return slots;
-}
-
-async getSlots(
-  doctorId: number,
-  date: string,
-) {
-
-  if (isNaN(new Date(date).getTime())) {
-  throw new BadRequestException(
-    'Invalid date format. Use YYYY-MM-DD',
-  );
-}
-const requestedDate = new Date(date);
-
-const today = new Date();
-
-today.setHours(
-  0,
-  0,
-  0,
-  0,
-);
-
-if (requestedDate < today) {
-  throw new BadRequestException(
-    'Past dates are not allowed',
-  );
-}
-
-const resolvedAvailability =
-  await this.resolveAvailability(
-    doctorId,
-    date,
-  );
-
-  const doctor =
-  resolvedAvailability.doctor;
-
-  const slotDuration =
-  doctor.slotDuration;
-
-const allSlots: {
-  startTime: string;
-  endTime: string;
-  status: string;
-}[] = [];
-
-const waveAvailabilities: any[] = [];
-
-for (const availability of
-  resolvedAvailability.availabilities) {
-
-  if (
-    availability.schedulingType ===
-    SchedulingType.WAVE
+  async getSlots(
+    doctorId: number,
+    date: string,
   ) {
-    const bookedCount =
-      await this.appointmentRepository.count({
+
+    if (isNaN(new Date(date).getTime())) {
+      throw new BadRequestException(
+        'Invalid date format. Use YYYY-MM-DD',
+      );
+    }
+    const requestedDate = new Date(date);
+
+    const today = new Date();
+
+    today.setHours(
+      0,
+      0,
+      0,
+      0,
+    );
+
+    if (requestedDate < today) {
+      throw new BadRequestException(
+        'Past dates are not allowed',
+      );
+    }
+
+    const resolvedAvailability =
+      await this.resolveAvailability(
+        doctorId,
+        date,
+      );
+
+    const doctor =
+      resolvedAvailability.doctor;
+
+    const slotDuration =
+      doctor.slotDuration;
+
+    const allSlots: {
+      startTime: string;
+      endTime: string;
+      status: string;
+    }[] = [];
+
+    const waveAvailabilities: any[] = [];
+
+    for (const availability of
+      resolvedAvailability.availabilities) {
+
+      if (
+        availability.schedulingType ===
+        SchedulingType.WAVE
+      ) {
+        const bookedCount =
+          await this.appointmentRepository.count({
+            where: {
+              doctorProfile: {
+                id: doctorId,
+              },
+              date,
+              status:
+                AppointmentStatus.BOOKED,
+            },
+          });
+
+        waveAvailabilities.push(
+          this.generateWaveAvailability(
+            availability.startTime,
+            availability.endTime,
+            availability.capacity ?? 0,
+            bookedCount,
+          ),
+        );
+
+        continue;
+      }
+
+      const generatedSlots =
+        this.generateSlots(
+          availability.startTime,
+          availability.endTime,
+          slotDuration,
+          availability.bufferTime ?? 0,
+        );
+
+
+      allSlots.push(
+        ...generatedSlots,
+      );
+    }
+    let filteredSlots: {
+      startTime: string;
+      endTime: string;
+      status: string;
+    }[] = allSlots;
+
+    const bookedAppointments =
+      await this.appointmentRepository.find({
         where: {
           doctorProfile: {
             id: doctorId,
@@ -244,142 +287,216 @@ for (const availability of
         },
       });
 
-    waveAvailabilities.push(
-      this.generateWaveAvailability(
-        availability.startTime,
-        availability.endTime,
-        availability.capacity ?? 0,
-        bookedCount,
-      ),
-    );
+    filteredSlots =
+      filteredSlots.filter(
+        (slot) =>
+          !bookedAppointments.some(
+            (appointment) =>
+              appointment.startTime
+                .toString()
+                .slice(0, 5) ===
+              slot.startTime,
+          ),
+      );
 
-    continue;
-  }
+    const currentDate = new Date()
+      .toISOString()
+      .split('T')[0];
 
-  const generatedSlots =
-  this.generateSlots(
-    availability.startTime,
-    availability.endTime,
-    slotDuration,
-    availability.bufferTime ?? 0,
-  );
+    if (date === currentDate) {
+      const currentTime =
+        new Date()
+          .toTimeString()
+          .slice(0, 5);
 
+      filteredSlots =
+        filteredSlots.filter(
+          (slot) =>
+            slot.startTime >= currentTime,
+        );
+    }
+    if (
+      filteredSlots.length === 0 &&
+      waveAvailabilities.length === 0
+    ) {
+      return {
+        message:
+          'No available slots found for this date',
+        doctorId,
+        date,
+        slots: [],
+      };
+    }
+    if (waveAvailabilities.length > 0) {
+      return {
+        doctorId,
+        date,
+        schedulingType:
+          SchedulingType.WAVE,
 
-  allSlots.push(
-    ...generatedSlots,
-  );
-}
-let filteredSlots: {
-  startTime: string;
-  endTime: string;
-  status: string;
-}[] = allSlots;
+        source:
+          resolvedAvailability.source,
 
-const bookedAppointments =
-  await this.appointmentRepository.find({
-    where: {
-      doctorProfile: {
-        id: doctorId,
-      },
+        waves:
+          waveAvailabilities,
+      };
+    }
+
+    return {
+      doctorId,
       date,
-      status:
-        AppointmentStatus.BOOKED,
-    },
-  });
+      schedulingType:
+        SchedulingType.STREAM,
 
-filteredSlots =
-  filteredSlots.filter(
-    (slot) =>
-      !bookedAppointments.some(
-        (appointment) =>
-          appointment.startTime
-            .toString()
-            .slice(0, 5) ===
-          slot.startTime,
-      ),
-  );
+      slotDuration,
 
-const currentDate = new Date()
-  .toISOString()
-  .split('T')[0];
+      source:
+        resolvedAvailability.source,
 
-if (date === currentDate) {
-  const currentTime =
-    new Date()
-      .toTimeString()
-      .slice(0, 5);
+      totalSlots:
+        filteredSlots.length,
 
-  filteredSlots =
-    filteredSlots.filter(
-      (slot) =>
-        slot.startTime >= currentTime,
-    );
-}
-if (
-  filteredSlots.length === 0 &&
-  waveAvailabilities.length === 0
-) {
-  return {
-    message:
-      'No available slots found for this date',
-    doctorId,
-    date,
-    slots: [],
-  };
-}
-if (waveAvailabilities.length > 0) {
-  return {
-    doctorId,
-    date,
-    schedulingType:
-      SchedulingType.WAVE,
+      availableSlots:
+        filteredSlots.length,
 
-    source:
-      resolvedAvailability.source,
+      slots: filteredSlots,
+    };
+  }
+  async findNextAvailableDate(
+    doctorId: number,
+  ) {
 
-    waves:
-      waveAvailabilities,
-  };
-}
+    const SEARCH_LIMIT = 30;
 
-return {
-  doctorId,
-  date,
-  schedulingType:
-    SchedulingType.STREAM,
 
-  slotDuration,
+    for (
+      let i = 0;
+      i < SEARCH_LIMIT;
+      i++
+    ) {
 
-  source:
-    resolvedAvailability.source,
+      const searchDate =
+        new Date();
 
-  totalSlots:
-    filteredSlots.length,
+      searchDate.setHours(
+        0,
+        0,
+        0,
+        0,
+      );
 
-  availableSlots:
-    filteredSlots.length,
+      searchDate.setDate(
+        searchDate.getDate() + i,
+      );
 
-  slots: filteredSlots,
-};
-}
-private generateWaveAvailability(
-  startTime: string,
-  endTime: string,
-  capacity: number,
-  bookedCount: number,
-) {
-  return {
-    schedulingType:
-      SchedulingType.WAVE,
+      const date =
+        `${searchDate.getFullYear()}-${String(
+          searchDate.getMonth() + 1,
+        ).padStart(2, '0')}-${String(
+          searchDate.getDate(),
+        ).padStart(2, '0')}`;
 
-    startTime,
+      const result =
+        await this.getSlots(
+          doctorId,
+          date,
+        );
 
-    endTime,
+      if (
 
-    capacity,
+        (result as any).slots?.length > 0
 
-    available:
-      capacity - bookedCount,
-  };
-}
+      ) {
+
+        return {
+
+          nextAvailableDate:
+            date,
+
+          searchedDays:
+            i,
+
+          schedulingType:
+            SchedulingType.STREAM,
+
+          slots:
+            (result as any).slots,
+
+        };
+
+      }
+
+      if (
+
+        // (result as any).waves?.length > 0
+
+        (result as any).waves?.some(
+
+          (wave: any) =>
+
+            wave.available > 0,
+
+        )
+
+      ) {
+
+        return {
+
+          nextAvailableDate:
+            date,
+
+          searchedDays:
+            i,
+
+          schedulingType:
+            SchedulingType.WAVE,
+
+          waves:
+            (result as any).waves.map(
+              (wave: any) => ({
+                startTime:
+                  wave.startTime,
+
+                endTime:
+                  wave.endTime,
+
+                available:
+                  wave.available,
+              }),
+            ),
+
+        };
+
+      }
+
+    }
+
+    return {
+
+      message:
+        'No appointments available in the next 30 working days. Please try again later.',
+
+    };
+
+  }
+  private generateWaveAvailability(
+    startTime: string,
+    endTime: string,
+    capacity: number,
+    bookedCount: number,
+  ) {
+    return {
+      schedulingType:
+        SchedulingType.WAVE,
+
+      startTime,
+
+      endTime,
+
+      capacity,
+
+      available:
+        capacity - bookedCount,
+    };
+  }
 }
